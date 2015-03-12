@@ -1,11 +1,5 @@
 OS = Mac
 
-# indicate the Hardware Image file
-HDA_IMG = hdc-0.11.img
-
-# indicate the path of the calltree
-CALLTREE=$(shell find tools/ -name "calltree" -perm 755 -type f)
-
 # indicate the path of the bochs
 #BOCHS=$(shell find tools/ -name "bochs" -perm 755 -type f)
 BOCHS=bochs
@@ -102,6 +96,7 @@ tmp.s:	boot/bootsect.s tools/system
 	@cat boot/bootsect.s >> tmp.s
 
 clean:
+	@make clean -C rootfs
 	@rm -f Image System.map tmp_make core boot/bootsect boot/setup
 	@rm -f init/*.o tools/system boot/*.o typescript* info bochsout.txt
 	@for i in mm fs kernel lib boot; do make clean -C $$i; done 
@@ -112,10 +107,7 @@ info:
 	@cat info
 
 distclean: clean
-	@rm -f tag cscope* linux-0.11.* $(CALLTREE)
-	@(find tools/calltree-2.3 -name "*.o" | xargs -i rm -f {})
-	@make clean -C tools/calltree-2.3
-	@make clean -C tools/bochs/bochs-2.3.7
+	@rm -f tag cscope* linux-0.11.*
 
 backup: clean
 	@(cd .. ; tar cf - linux | compress16 - > backup.Z)
@@ -134,12 +126,15 @@ tags:
 cscope:
 	@cscope -Rbkq
 
-start:
-	@qemu-system-x86_64 -m 16M -boot a -fda Image -hda $(HDA_IMG)
+hda:
+	@make hda -C rootfs
+
+start: hda
+	@qemu-system-x86_64 -m 16M -boot a -fda Image -hda rootfs/$(HDA_IMG)
 
 debug:
 	@echo $(OS)
-	@qemu-system-x86_64 -m 16M -boot a -fda Image -hda $(HDA_IMG) -s -S
+	@qemu-system-x86_64 -m 16M -boot a -fda Image -hda rootfs/$(HDA_IMG) -s -S
 
 bochs-debug:
 	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc	
@@ -153,15 +148,6 @@ endif
 
 bochs-clean:
 	@make clean -C tools/bochs/bochs-2.3.7
-
-calltree:
-ifeq ($(CALLTREE),)
-	@make -C tools/calltree-2.3
-endif
-
-calltree-clean:
-	@(find tools/calltree-2.3 -name "*.o" \
-	-o -name "calltree" -type f | xargs -i rm -f {})
 
 cg: callgraph
 callgraph:

@@ -1,5 +1,8 @@
+Image
+System.map
 Thumbs.db
 *.log
 *.bak
 .DS_Store
-
+*.o
+*.a
