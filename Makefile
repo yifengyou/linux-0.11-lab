@@ -207,8 +207,15 @@ endif
 bochs-clean:
 	@make clean -C tools/bochs/bochs-2.3.7
 
+ifeq ($(f),)
+f = main
+endif
+ifeq ($(d),)
+d = ./
+endif
+
 cg:
-	@tools/callgraph $(f) $(d)
+	@tools/callgraph -f $(f) -d $(d)
 
 help:
 	@echo "<<<<This is the basic help info of linux-0.11>>>"
