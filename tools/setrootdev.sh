@@ -17,9 +17,9 @@ else
 fi
 
 # Set "device" for the root image file
-echo -ne "\x$DEFAULT_MINOR_ROOT\x$DEFAULT_MAJOR_ROOT" | dd ibs=1 obs=1 count=2 seek=508 of=$IMAGE conv=notrunc status=none 2>&1 >/dev/null
+echo -ne "\x$DEFAULT_MINOR_ROOT\x$DEFAULT_MAJOR_ROOT" | dd ibs=1 obs=1 count=2 seek=508 of=$IMAGE conv=notrunc >/dev/null 2>&1
 
 # Write Ramdisk RootFS
 if [ -n "$ram_img" -a -f "$ram_img" ]; then
-	dd if=$ram_img seek=256 bs=1024 of=$IMAGE conv=notrunc status=none 2>&1 >/dev/null
+	dd if=$ram_img seek=256 bs=1024 of=$IMAGE conv=notrunc >/dev/null 2>&1
 fi
