@@ -5,14 +5,25 @@
 # -- Based on cflow and tree2dotx
 #
 
+# OS
+OS=$(uname)
+
 # Tree2Dot
-TOP_DIR=$(dirname `readlink -f $0`)/
+if [ "x$OS" == "xDarwin" ]; then
+    TOP_DIR=$(dirname $0)/
+else
+    TOP_DIR=$(dirname `readlink -f $0`)/
+fi
 tree2dotx=${TOP_DIR}/tree2dotx
 
 # Output directory
 OUT_DIR=calltree
 PIC_TYPE=svg
-BROWSER=chromium-browser
+if [ "x$OS" == "xDarwin" ]; then
+    BROWSER=/Applications/Safari.app/Contents/MacOS/Safari
+else
+    BROWSER=chromium-browser
+fi
 
 # Input: Function Name [Directory Name]
 func=$1
