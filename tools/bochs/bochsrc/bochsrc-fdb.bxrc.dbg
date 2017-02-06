@@ -6,7 +6,6 @@ floppya: 1_44="images/Image", status=inserted
 floppyb: 1_44="rootfs/rootimage-0.11", status=inserted
 boot: a
 log: bochsout.txt
-parport1: enable=0
 vga_update_interval: 300000
 keyboard_serial_delay: 200
 keyboard_paste_delay: 100000
