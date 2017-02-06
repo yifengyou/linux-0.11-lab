@@ -1,17 +1,28 @@
 #!/bin/bash
-# tree2dot.sh --- transfer a "tree"(such as the result of tree,calltree)
-#                 to a p_w_picpath discribed by DOT language(provided by Graphviz)
-# author: falcon<zhangjinw@gmail.com>
-# update: 2007-11-14
-# usage:
-#       tree -L 2 -d /path/to/a/directory | bash tree2dot.sh > tree.dot
-#       cd /path/to/a/c/project/; calltree -gb -np -m *.c | bash tree2dot.sh > tree.dot
+#
+# tree2dotx --- transfer a "tree"(such as the result of tree,calltree,cflow -b)
+#                 to a picture discribed by DOT language(provided by Graphviz)
+#
+# Author: falcon <wuzhangjin@gmail.com>
+# Update: 2007-11-14, 2015-3-19
+# Usage:
+#
+#       tree -L 2 -d /path/to/a/directory | bash tree2dotx | dot -Tsvg -o tree.svg
+#       cd /path/to/a/c/project/; calltree -gb -np -m *.c | bash tree2dotx | dot -Tsvg -o calltree.svg
+#       cd /path/to/a/c/project/; cflow -b -m setup_rw_floppy kernel/blk_drv/floppy.c | bash tree2dotx | dot -Tsvg -o cflow.svg
+#
 
-# indicate the symbols you not concern with space as decollator here
+# Set the picture size and direction(LR=Left2Right,TB=Top2Bottom)
+size="1920,1080"
+direction="LR"
+
+# Specify the symbols you not concern with space as decollator here
 filterstr="";
 
-# transfer the tree result to a file described in DOT language
+# Transfer the tree result to a file described in DOT language
+
 grep -v ^$ | grep -v "^[0-9]* director" \
+| sed -e "s/<.*>.*//g" | tr -d '\(' | tr -d '\)' | tr '|' ' '\
 | awk '{if(NR==1) system("basename "$0); else printf("%s\n", $0);}' |\
 awk -v fstr="$filterstr" '# function for filter the symbols you not concern
         function need_filter(node) {
@@ -28,13 +39,15 @@ awk -v fstr="$filterstr" '# function for filter the symbols you not concern
                 split(fstr,farr," ");
                 # print some setting info
                 printf("digraph G{\n");
-                printf("\trankdir=LR;\n");
-                printf("\tsize=\"800,600\";\n");
+                printf("\trankdir='$direction';\n");
+                printf("\tsize=\"'$size'\";\n");
                 printf("\tnode [fontsize=10,fontcolor=red,style=filled,fillcolor=lightblue];\n");
         }{
                 # get the node, and its depth(nodedepth)
-                nodedepth=match($0, "[^| `]");
+                #nodedepth=match($0, "[^| `]");
+                nodedepth=match($0, "[[:digit:]|[:alpha:]]|[[:alnum:]]");
                 node=substr($0,nodedepth);
+                #printf("%d %s\n", nodedepth, node);
                 nodedepth=int(nodedepth/4)
                 # if whose depth is 1 less than him, who is his parent
                 if(nodedepth-oldnodedepth == 1) {
