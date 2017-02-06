@@ -49,7 +49,7 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
         $ apt-get install vim cscope exuberant-ctags build-essential qemu
 
 * Use with docker (everything is installed by default for you)
-    * Install docker engine (Official doc is [here](https://docs.docker.com/engine/installation/ubuntulinux/))
+    * Install docker engine (Official doc is [here](https://docs.docker.com/engine/installation/linux/))
 
                 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
                 $ sudo -s
