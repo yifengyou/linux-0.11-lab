@@ -1,4 +1,7 @@
+
 OS := $(shell uname)
+TOP_DIR = $(CURDIR)
+TOOL_DIR = $(TOP_DIR)/tools/
 
 # Qemu
 QEMU_PATH =
@@ -8,13 +11,13 @@ QEMU = qemu-system-i386
 BOCHS = bochs
 
 # VM configuration
-VM_CFG = tools/.vm.cfg
+VM_CFG = $(TOOL_DIR)/.vm.cfg
 
 # Tool for Image building
-BUILD = tools/build.sh
+BUILD = $(TOOL_DIR)/build.sh
 
 # Tool for specify root device
-SETROOTDEV = tools/setrootdev.sh
+SETROOTDEV = $(TOOL_DIR)/setrootdev.sh
 
 # Specify the Rootfs Image file
 HDA_IMG = hdc-0.11.img
@@ -22,7 +25,7 @@ FLP_IMG = rootimage-0.11
 RAM_IMG = rootram.img
 
 # Tool for call graph generation
-CG = tools/callgraph
+CG = $(TOOL_DIR)/callgraph
 
 ifeq ($(OS), Linux)
 	AS	= as -g --32
@@ -36,7 +39,7 @@ ifeq ($(OS), Linux)
 	STRIP	= strip
 	OBJCOPY = objcopy
 
-	QEMU_PATH= tools/qemu/
+	QEMU_PATH= $(TOOL_DIR)/qemu/
 	# This prebuilt qemu is too old, no /dev/kqemu in current kernel now.
 	QEMU     = qemu-system-i386 -no-kqemu
 endif
@@ -49,7 +52,7 @@ ifeq ($(OS), Darwin)
 	CFLAGS  = -gdwarf-2 -g3 -m32 -fno-builtin -fno-stack-protector -fomit-frame-pointer -fstrength-reduce #-Wall
 
 	CPP	= i386-elf-cpp -nostdinc
-	AR	=i386-elf-ar
-	STRIP = i386-elf-strip
+	AR	= i386-elf-ar
+	STRIP   = i386-elf-strip
 	OBJCOPY = i386-elf-objcopy
 endif

@@ -1,3 +1,6 @@
+TOP_DIR = $(CURDIR)
+TOOL_DIR = $(TOP_DIR)/tools/
+
 # Allow to run kernel on different emulators with different prebuilt rootfs
 
 # Rootfs preparation
@@ -31,7 +34,7 @@ QEMU_CMD_HDA = $(QEMU_CMD) -hda rootfs/$(HDA_IMG)
 nullstring :=
 QEMU_DBG = $(nullstring) -s -S #-nographic #-serial '/dev/ttyS0'"
 
-BOCHS_CFG = tools/bochs/bochsrc/
+BOCHS_CFG = $(TOOL_DIR)/bochs/bochsrc/
 BOCHS_CMD = $(BOCHS) -q -f $(BOCHS_CFG)/bochsrc-fda.bxrc
 BOCHS_CMD_FDB = $(BOCHS) -q -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
 BOCHS_CMD_HDA = $(BOCHS) -q -f $(BOCHS_CFG)/bochsrc-hd.bxrc

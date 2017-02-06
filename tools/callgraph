@@ -22,11 +22,7 @@
 OS=$(uname)
 
 # Tree2Dot
-if [ "x$OS" == "xDarwin" ]; then
-    TOP_DIR=$(dirname $0)/
-else
-    TOP_DIR=$(dirname `readlink -f $0`)/
-fi
+TOP_DIR=$(cd $(dirname $0) && pwd)/
 tree2dotx=${TOP_DIR}/tree2dotx
 
 # Output directory
@@ -142,16 +138,16 @@ long_pic=${OUT_DIR}/${pic}
 
 which cflow 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
-        echo "Note: cflow doesn't exist, please install it..."
-        sleep 2
-        echo "Note: Use calltree instead for this test."
-        sleep 2
-        [ -n "$depth" ] && depth="depth=$depth"
-        calltree="${TOP_DIR}/calltree -b -np $depth list="
+        echo "Error: cflow doesn't exist, please install it..."
+        exit 1
 else
         [ -n "$depth" ] && depth=" -d $depth "
         calltree="cflow -b $depth -m "
 fi
+
+which dot 2>&1 > /dev/null
+[ $? -ne 0 ] && "Error: dot doesn't exist, please install graphviz..."
+
 echo "Command: ${calltree}${func} ${file} | ${tree2dotx} "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic"
 ${calltree}${func} ${file} | ${tree2dotx} -f "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic
 
