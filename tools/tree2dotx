@@ -24,8 +24,8 @@ filterstr="";
 grep -v ^$ | grep -v "^[0-9]* director" \
 | sed -e "s/<.*>.*//g" | tr -d '\(' | tr -d '\)' | tr '|' ' ' \
 | sed -e "s/ \[.*\].*//g" \
-| awk '{if(NR==1) system("basename "$0); else printf("%s\n", $0);}' |\
-awk -v fstr="$filterstr" '# function for filter the symbols you not concern
+| awk '{if(NR==1) system("basename "$0); else printf("%s\n", $0);}' \
+| awk -v fstr="$filterstr" '# function for filter the symbols you not concern
         function need_filter(node) {
                 for ( i in farr ) {
                     if (match(node,farr[i]" ") == 1 || match(node,"^"farr[i]"$") == 1) {
@@ -36,7 +36,7 @@ awk -v fstr="$filterstr" '# function for filter the symbols you not concern
         }
         BEGIN{
                 # Filternode array are used to record the symbols who have been filtered.
-                oldnodedepth = -1; oldnode = ""; nodep[-1] = ""; filternode[nodep[-1]] = 0;
+                oldnodedepth = -1; oldnode = ""; nodep[-1] = ""; filter[nodep[-1]] = 0;
                 oldnodedepth_orig = -1; nodepre = 0; nodebase = 0; nodefirst = 0;
 
                 # Store the symbols to an array farr
@@ -79,14 +79,15 @@ awk -v fstr="$filterstr" '# function for filter the symbols you not concern
                 }
 
                 # for debugging
-                #printf("%d %s\n", nodedepth, node);
-                #printf("\t\"%s\";\n",node);
+                # printf("%d %s\n", nodedepth, node);
+                # printf("\t\"%s\";\n",node);
                 # print the vectors
 
                 if (oldnodedepth != -1) {
                         # if need filter or whose parent have been filter, not print it, and set the flat of filter to 1
-                        if(need_filter(node) || filternode[nodep[nodedepth-1]]==1) {
+                        if (need_filter(node) || filter[nodep[nodedepth-1]] == 1) {
                                 filter[node] = 1;
+                        #       printf("node = %s, filter[node] = %d\n", node, filter[node]);
 			} else if (nodep[nodedepth-1] != "") {
                                 printf("\t\"%s\" -> \"%s\";\n", nodep[nodedepth-1], node, nodep[nodedepth-1], node);
                         #       printf("\t\"%s\" -> \"%s\"[label=\"%s>%s\"];\n", nodep[nodedepth-1], node, nodep[nodedepth-1], node);
