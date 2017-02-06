@@ -41,6 +41,7 @@ optional
 
     $ sudo port install qemu
     $ sudo port install i386-elf-binutils i386-elf-gcc
+    $ cd tools/mac/ ; tar Jxf gdb.xz
 
 optional
 
