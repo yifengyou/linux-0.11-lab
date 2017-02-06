@@ -25,6 +25,10 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
     - [Floppy image](#floppy-image)
     - [Harddisk image](#harddisk-image)
 
+
+- [Examples](#examples)
+    - [System Call](#system-call)
+
 - [Changes](#changes)
 
 <span id="introduction"></span>
@@ -203,7 +207,7 @@ Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
 <span id="hack-rootfs"></span>
 ## Hack Rootfs
 
-Three different root filesystem images are stored in rootfs/:
+Three different root filesystem images are stored in `rootfs/`:
 
 * rootram.img -- RAM image
 * rootimage   -- Floppy image
@@ -212,7 +216,7 @@ Three different root filesystem images are stored in rootfs/:
 <span id="ram-image"></span>
 ### Ram image
 
-rootram.img is mountable directly:
+`rootram.img` is mountable directly:
 
     $ mkdir /path/to/rootram/
     $ sudo mount -o rootfs/rootram.img /path/to/rootram/
@@ -220,7 +224,7 @@ rootram.img is mountable directly:
 <span id="floppy-image"></span>
 ### Floppy image
 
-rootimage-0.11 is a minix filesystem, must with '-t minix' obviously:
+`rootimage-0.11` is a minix filesystem, must with `-t minix` obviously:
 
     $ sudo mkdir /path/to/rootimage/
     $ sudo mount -t minix rootfs/rootimage-0.11 /path/to/rootimage
@@ -228,7 +232,7 @@ rootimage-0.11 is a minix filesystem, must with '-t minix' obviously:
 <span id="hd-image"></span>
 ### Harddisk image
 
-hdc-0.11.img has a partition table, should be mounted with an offset:
+`hdc-0.11.img` has a partition table, should be mounted with an offset:
 
     $ mkdir /path/to/hdc/
     $ fdisk -lu rootfs/hdc-0.11.img
@@ -246,6 +250,13 @@ hdc-0.11.img has a partition table, should be mounted with an offset:
     rootfs/hdc-0.11.img2          124032      248063       62016   81  Minix / old Linux
 
     $ sudo mount -o offset=$((2*512)) rootfs/hdc-0.11.img /path/to/hdc/
+
+<span id="examples"></span>
+# Examples
+
+Some examples are stored in `examples/` with their own README.md:
+
+* syscall -- shows how to add a new system call
 
 <span id="changes"></span>
 ## Changes
