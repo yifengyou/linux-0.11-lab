@@ -14,6 +14,7 @@ RUN apt-get install -y graphviz cflow
 RUN apt-get install -y git ca-certificates
 
 ADD . /linux-0.11-lab
+RUN chmod -R 777 /linux-0.11-lab
 WORKDIR /linux-0.11-lab
 
 EXPOSE 6080
