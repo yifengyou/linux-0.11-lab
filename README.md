@@ -75,9 +75,9 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
 
 To simplify the above operations, three scripts are added for:
 
-    * install-docker-lab.sh: Install docker env of the lab
-    * start-docker-lab.hs:   Start the lab server with docker
-    * open-docker-lab.sh:    Open the lab via web browser
+    * tools/install-docker-lab.sh: Install docker env of the lab
+    * tools/start-docker-lab.hs:   Start the lab server with docker
+    * tools/open-docker-lab.sh:    Open the lab via web browser
 
 Optional (bochs emulator instead of qemu)
 
