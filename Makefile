@@ -33,7 +33,7 @@ LIBS	=lib/lib.a
 
 all:	Image
 
-Image: boot/bootsect boot/setup kernel.sym ramfs
+Image: boot/bootsect boot/setup kernel.sym ramfs FORCE
 	@cp -f images/kernel.sym images/kernel.tmp
 	@$(STRIP) images/kernel.tmp
 	@$(OBJCOPY) -O binary -R .note -R .comment images/kernel.tmp images/kernel
