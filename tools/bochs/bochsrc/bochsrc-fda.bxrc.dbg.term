@@ -16,4 +16,4 @@ private_colormap: enabled=0
 fullscreen: enabled=0
 screenmode: name="sample"
 i440fxsupport: enabled=0
-display_library: sdl
+display_library: term

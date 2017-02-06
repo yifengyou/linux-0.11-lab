@@ -60,6 +60,16 @@ else
         VM_DBG = $(QEMU_DBG)
 endif
 
+# Allow to use curses based console via ssh
+VM_DISPLAY =
+ifeq ($(G),0)
+ifeq ($(VM), bochs)
+	VM_DISPLAY = .term
+else
+	VM_DISPLAY = $(nullstring) -curses
+endif
+endif
+
 # Running on emulators with differrent rootfs
 
 ramdisk-boot:
@@ -68,26 +78,26 @@ ramdisk-boot:
 
 start: ramdisk-boot Image
 	$(SETROOTDEV_CMD_RAM)
-	$(VM_CMD)
+	$(VM_CMD)$(VM_DISPLAY)
 
 start-fd: Image flp
 	$(SETROOTDEV_CMD_FDB)
-	$(VM_CMD_FDB)
+	$(VM_CMD_FDB)$(VM_DISPLAY)
 
 start-hd: Image hda
 	$(SETROOTDEV_CMD_HDA)
-	$(VM_CMD_HDA)
+	$(VM_CMD_HDA)$(VM_DISPLAY)
 
 # Debugging the above targets
 
 debug: ramdisk-boot Image
 	$(SETROOTDEV_CMD_RAM)
-	$(VM_CMD)$(VM_DBG)
+	$(VM_CMD)$(VM_DBG)$(VM_DISPLAY)
 
 debug-fd: Image flp
 	$(SETROOTDEV_CMD_FDB)
-	$(VM_CMD_FDB)$(VM_DBG)
+	$(VM_CMD_FDB)$(VM_DBG)$(VM_DISPLAY)
 
 debug-hd: Image hda
 	$(SETROOTDEV_CMD_HDA)
-	$(VM_CMD_HDA)$(VM_DBG)
+	$(VM_CMD_HDA)$(VM_DBG)$(VM_DISPLAY)

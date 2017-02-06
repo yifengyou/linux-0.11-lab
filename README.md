@@ -82,6 +82,7 @@ Optional (bochs emulator instead of qemu)
     $ make  		// compile
     $ make start-hd	// boot it on qemu with hard disk image
     $ make debug-hd	// debug it via qemu & gdb, you'd start gdb to connect it.
+    $ make start-hd G=0 // Use curses based terminal instead of graphics, friendly for ssh login
 
     $ gdb images/kernel.sym
     (gdb) target remote :1234
