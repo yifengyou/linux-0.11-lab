@@ -79,6 +79,7 @@ If want to learn the latest [Linux Kernel](http://www.kernel.org), please try ou
     $ make start-hd	// boot it on qemu with hard disk image
     $ make debug-hd	// debug it via qemu & gdb, you'd start gdb to connect it.
     $ make start-hd G=0 // Use curses based terminal instead of graphics, friendly for ssh login
+    $ QEMU_PREBUILT=0 make start-hd // Don't use prebuilt qemu. latest qemu only boot with hd rootfs
 
     $ make switch       // switch to another emulator, between qemu and bochs
     Switch to use emulator: bochs

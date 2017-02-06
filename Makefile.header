@@ -5,7 +5,10 @@ TOOL_DIR = $(TOP_DIR)/tools/
 
 # Qemu
 QEMU_PATH =
-QEMU = qemu-system-i386
+QEMU_PREBUILT ?= 1
+QEMU_PREBUILT_PATH= $(TOOL_DIR)/qemu/
+
+QEMU ?= qemu-system-i386
 
 # Bochs
 BOCHS = bochs
@@ -39,9 +42,11 @@ ifeq ($(OS), Linux)
 	STRIP	= strip
 	OBJCOPY = objcopy
 
-	QEMU_PATH= $(TOOL_DIR)/qemu/
 	# This prebuilt qemu is too old, no /dev/kqemu in current kernel now.
-	QEMU     = qemu-system-i386 -no-kqemu
+ifeq ($(QEMU_PREBUILT), 1)
+	QEMU_PATH = $(QEMU_PREBUILT_PATH)
+	QEMU	= qemu-system-i386 -no-kqemu
+endif
 endif
 
 ifeq ($(OS), Darwin)
