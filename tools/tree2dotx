@@ -12,9 +12,17 @@
 #       cd /path/to/a/c/project/; cflow -b -m setup_rw_floppy kernel/blk_drv/floppy.c | bash tree2dotx | dot -Tsvg -o cflow.svg
 #
 
-# Set the picture size and direction(LR=Left2Right,TB=Top2Bottom)
+# Set the picture size, direction(LR=Left2Right,TB=Top2Bottom) and shape(diamond, circle, box)
 size="1920,1080"
 direction="LR"
+shape="box"
+
+# color, X11 color name: http://en.wikipedia.org/wiki/X11_color_names
+fontcolor="blue"
+fillcolor="Wheat"
+
+# fontsize
+fontsize=16
 
 # Specify the symbols you not concern with space as decollator here
 filterstr="";
@@ -33,7 +41,7 @@ function usage
         echo ""
 }
 
-while getopts "f:s:d:h" opt;
+while getopts "f:s:S:d:h" opt;
 do
         case $opt in
                 f)
@@ -41,6 +49,9 @@ do
                 ;;
                 s)
                         size=$OPTARG
+                ;;
+                S)
+                        shape=$OPTARG
                 ;;
                 d)
                         direction=$OPTARG
@@ -79,7 +90,7 @@ grep -v ^$ | grep -v "^[0-9]* director" \
                 printf("digraph G{\n");
                 printf("\trankdir='$direction';\n");
                 printf("\tsize=\"'$size'\";\n");
-                printf("\tnode [fontsize=10,fontcolor=red,style=filled,fillcolor=lightblue];\n");
+                printf("\tnode [fontsize='$fontsize',fontcolor='$fontcolor',style=filled,fillcolor='$fillcolor',shape='$shape'];\n");
         }{
                 # Get the node, and its depth(nodedepth)
                 # nodedepth = match($0, "[^| `]");
