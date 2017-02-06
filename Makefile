@@ -152,17 +152,17 @@ start-hd: hda
 debug:
 	@echo $(OS)
 	@$(SETROOTDEV) images/Image 0000
-	$(QEMU) -m 16M -boot a -fda images/Image -s -S -nographic -serial '/dev/ttyS0'
+	$(QEMU) -m 16M -boot a -fda images/Image -s -S #-nographic #-serial '/dev/ttyS0'
 
 debug-fd: flp
 	@echo $(OS)
 	@$(SETROOTDEV) images/Image 021d
-	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG) -s -S -nographic -serial '/dev/ttyS0'
+	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG) -s -S #-nographic #-serial '/dev/ttyS0'
 
 debug-hd: hda
 	@echo $(OS)
 	@$(SETROOTDEV) images/Image 0301
-	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG) -s -S -nographic -serial '/dev/ttyS0'
+	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG) -s -S #-nographic #-serial '/dev/ttyS0'
 
 bochs-debug:
 	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc	
