@@ -26,6 +26,8 @@ RUN gem sources -a https://ruby.taobao.org/
 
 RUN gem install showterm
 
+RUN apt-get install -y chromium-browser
+
 # Allow ubuntu user use sudo without password
 ADD sudoers.d/ubuntu /etc/sudoers.d/
 RUN chmod 440 /etc/sudoers.d/ubuntu
