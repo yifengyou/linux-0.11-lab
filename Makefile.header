@@ -3,6 +3,12 @@ UNAME := $(shell uname)
 # Qemu
 QEMU = qemu-system-i386
 
+# Bochs
+BOCHS = bochs
+
+# VM
+VM = $(shell cat vm.cfg)
+
 # Tool for specify root device
 SETROOTDEV = tools/setrootdev.sh
 

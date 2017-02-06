@@ -147,32 +147,52 @@ SETROOTDEV_CMD_HDA = $(SETROOTDEV_CMD) $(ROOT_HDA)
 QEMU_CMD = $(QEMU) -m 16M -boot a -fda images/Image
 QEMU_CMD_FDB = $(QEMU_CMD) -fdb rootfs/$(FLP_IMG)
 QEMU_CMD_HDA = $(QEMU_CMD) -hda rootfs/$(HDA_IMG)
+nullstring :=
+QEMU_DBG = $(nullstring) -s -S #-nographic #-serial '/dev/ttyS0'"
+
+BOCHS_CFG = tools/bochs/bochsrc/
+BOCHS_CMD = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fda.bxrc
+BOCHS_CMD_FDB = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
+BOCHS_CMD_HDA = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-hd.bxrc
+BOCHS_DBG = .dbg
+
+ifeq ($(VM), bochs)
+        VM_CMD = $(BOCHS_CMD)
+        VM_CMD_FDB = $(BOCHS_CMD_FDB)
+        VM_CMD_HDA = $(BOCHS_CMD_HDA)
+        VM_DBG = $(BOCHS_DBG)
+else
+        VM_CMD = $(QEMU_CMD)
+        VM_CMD_FDB = $(QEMU_CMD_FDB)
+        VM_CMD_HDA = $(QEMU_CMD_HDA)
+        VM_DBG = $(QEMU_DBG)
+endif
 
 start: Image
 	$(SETROOTDEV_CMD_RAM)
-	$(QEMU_CMD)
+	$(VM_CMD)
 
 start-fd: Image flp
 	$(SETROOTDEV_CMD_FDB)
-	$(QEMU_CMD_FDB)
+	$(VM_CMD_FDB)
 
 start-hd: Image hda
 	$(SETROOTDEV_CMD_HDA)
-	$(QEMU_CMD_HDA)
+	$(VM_CMD_HDA)
 
 debug: Image
 	$(SETROOTDEV_CMD_RAM)
-	$(QEMU_CMD) -s -S #-nographic #-serial '/dev/ttyS0'
+	$(VM_CMD)$(VM_DBG)
 
 debug-fd: Image flp
 	echo $(OS)
 	$(SETROOTDEV_CMD_FDB)
-	$(QEMU_CMD_FDB) -s -S #-nographic #-serial '/dev/ttyS0'
+	$(VM_CMD_FDB)$(VM_DBG)
 
 debug-hd: Image hda
 	echo $(OS)
 	$(SETROOTDEV_CMD_HDA)
-	$(QEMU_CMD_HDA) -s -S #-nographic #-serial '/dev/ttyS0'
+	$(VM_CMD_HDA)$(VM_DBG)
 
 bochs-debug:
 	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc
