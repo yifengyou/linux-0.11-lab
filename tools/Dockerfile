@@ -15,6 +15,15 @@ RUN apt-get install -y git ca-certificates
 
 RUN apt-get install -y xz-utils
 
+# Allow ubuntu user use sudo without password
+ADD sudoers.d/ubuntu /etc/sudoers.d/
+RUN chmod 440 /etc/sudoers.d/ubuntu
+
+# Add shortcuts on Desktop
+ADD linux-lab.desktop /
+
+ADD startup.sh /
+
 EXPOSE 6080
 EXPOSE 5900
 EXPOSE 22
