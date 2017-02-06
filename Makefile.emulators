@@ -34,7 +34,7 @@ BOCHS_CMD_FDB = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
 BOCHS_CMD_HDA = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-hd.bxrc
 BOCHS_DBG = .dbg
 
-VM = $(shell cat $(VM_CFG))
+VM = $(shell cat $(VM_CFG) 2>/dev/null)
 
 ifeq ($(VM), bochs)
         NEW_VM=qemu
@@ -46,7 +46,7 @@ switch:
 	@echo "Switch to use emulator: $(NEW_VM)"
 	@echo $(NEW_VM) > $(VM_CFG)
 
-VM=$(shell cat $(VM_CFG))
+VM=$(shell cat $(VM_CFG) 2>/dev/null)
 
 ifeq ($(VM), bochs)
         VM_CMD = $(BOCHS_CMD)

@@ -7,7 +7,7 @@ QEMU = qemu-system-i386
 BOCHS = bochs
 
 # VM configuration
-VM_CFG = tools/vm.cfg
+VM_CFG = tools/.vm.cfg
 
 # Tool for Image building
 BUILD = tools/build.sh
