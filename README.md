@@ -19,7 +19,7 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux, M
 
     $ make help		// get help
     $ make  		// compile
-    $ make boot-hd		// boot it on qemu with hard disk image
+    $ make start-hd		// boot it on qemu with hard disk image
     $ make debug-hd		// debug it via qemu & gdb, you'd start gdb to connect it.
 
     $ gdb images/kernel.sym

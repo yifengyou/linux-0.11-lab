@@ -137,15 +137,15 @@ flp:
 ramfs:
 	@make ramfs -C rootfs
 
-boot:
+start:
 	@$(SETROOTDEV) images/Image 0000
 	$(QEMU) -m 16M -boot a -fda images/Image
 
-boot-fd: flp
+start-fd: flp
 	@$(SETROOTDEV) images/Image 021d
 	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG)
 
-boot-hd: hda
+start-hd: hda
 	@$(SETROOTDEV) images/Image 0301
 	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG)
 
@@ -187,9 +187,9 @@ help:
 	@echo ""
 	@echo "Usage:"
 	@echo "     make --generate a kernel floppy Image with a fs on hda1"
-	@echo "     make boot -- boot the kernel in qemu"
-	@echo "     make boot-fd -- boot the kernel with fs in floppy"
-	@echo "     make boot-hd -- boot the kernel with fs in hard disk"
+	@echo "     make start -- start the kernel in qemu"
+	@echo "     make start-fd -- start the kernel with fs in floppy"
+	@echo "     make start-hd -- start the kernel with fs in hard disk"
 	@echo "     make debug -- debug the kernel in qemu & gdb at port 1234"
 	@echo "     make debug-fd -- debug the kernel with fs in floppy"
 	@echo "     make debug-hd -- debug the kernel with fs in hard disk"
