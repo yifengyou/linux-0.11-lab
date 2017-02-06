@@ -67,9 +67,9 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
                 $ docker logs $CONTAINER_ID | sed -n 1p
                 User: ubuntu Pass: ubuntu
 
-    * Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html`
+    * Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html` with 'ubuntu' as password
 
-                $ docker exec 8222763de ifconfig eth0 | grep "inet addr:"
+                $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
                 inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
 
 Optional (bochs emulator instead of qemu)
@@ -179,7 +179,7 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 
 - Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html`
 
-        $ docker exec 8222763de ifconfig eth0 | grep "inet addr:"
+        $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
         inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
 
 <span id="hack-linux-0.11-on-other-systems"></span>
