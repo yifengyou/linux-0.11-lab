@@ -224,7 +224,7 @@ Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
     * see: <http://www.oldlinux.org/oldlinux/viewthread.php?tid=11651&extra=page%3D1>
 
 * 2005, jiong.zhao <gohigh@sh163.net>
-    * write a book for Linux 0.11
+    * write a [book for Linux 0.11](http://www.oldlinux.org/download/clk011c-3.0.pdf)
     * release a version for RedHat 9 with rootfs, compilers and blabla
     * site: <http://www.oldlinux.org>
 
