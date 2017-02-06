@@ -1,6 +1,8 @@
 Linux 0.11 Lab
 ==============
 
+[![Codewake](https://www.codewake.com/badges/ask_question.svg)](https://www.codewake.com/p/linux-0-11-lab)
+
 The old Linux kernel source version [0.11](http://oldlinux.org) and the integrated experiment environment.
 
 [CS630 Qemu Lab](https://github.com/tinyclub/cs630-qemu-lab) is a related project, it is a friendly learning environment for the X86 assembly course: [CS630](http://www.cs.usfca.edu/%7Ecruse/cs630f06/).
