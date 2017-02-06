@@ -105,7 +105,7 @@ info:
 	@cat info
 
 distclean: clean
-	@rm -f tag cscope* linux-0.11.*
+	@rm -f tag* cscope* linux-0.11.*
 
 backup: clean
 	@(cd .. ; tar cf - linux | compress16 - > backup.Z)
