@@ -60,18 +60,16 @@ If want to learn the latest [Linux Kernel](http://www.kernel.org), please try ou
 * The Linux distributions: debian and ubuntu (>= 14.04) are recommended
 * Install the lab
 
-    $ git clone https://github.com/tinyclub/cloud-lab.git
+        $ git clone https://github.com/tinyclub/cloud-lab.git
+        $ cd cloud-lab/ && tools/docker/choose linux-0.11-lab
 
-    $ cd cloud-lab/ && tools/docker/choose linux-0.11-lab
+        $ tools/docker/build        # Build ourselves
+        or
+        $ tools/docker/pull         # Pull from docker hub
 
-
-    $ tools/docker/build        # Build ourselves
-    or
-    $ tools/docker/pull         # Pull from docker hub
-
-    $ tools/docker/uid
-    $ tools/docker/identify
-    $ tools/docker/run
+        $ tools/docker/uid
+        $ tools/docker/identify
+        $ tools/docker/run
 
 * The above command will start a VNC page, login with the password printed in the console
 
