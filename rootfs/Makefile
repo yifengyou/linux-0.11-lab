@@ -6,17 +6,17 @@ RAM_IMG_FLAG := $(shell find ./ -name $(RAM_IMG))
 
 hda: $(HDA_IMG).xz
 ifeq ($(HDA_IMG_FLAG),)
-	@tar Jvxf $< 2>&1 >/dev/null
+	@tar Jvxf $< >/dev/null 2>&1
 endif
 
 flp: $(FLP_IMG).xz
 ifeq ($(FLP_IMG_FLAG),)
-	@tar Jvxf $< 2>&1 >/dev/null
+	@tar Jvxf $< >/dev/null 2>&1
 endif
 
 ramfs: $(RAM_IMG).xz
 ifeq ($(RAM_IMG_FLAG),)
-	@tar Jvxf $< 2>&1 >/dev/null
+	@tar Jvxf $< >/dev/null 2>&1
 endif
 
 clean:

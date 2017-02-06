@@ -136,7 +136,7 @@ tmp=`echo $file | tr '/' '_' | tr '.' '_'`
 pic=${func}.${tmp}.${PIC_TYPE}
 long_pic=${OUT_DIR}/${pic}
 
-which cflow 2>&1 > /dev/null
+which cflow >/dev/null 2>&1
 if [ $? -ne 0 ]; then
         echo "Error: cflow doesn't exist, please install it..."
         exit 1
@@ -145,7 +145,7 @@ else
         calltree="cflow -b $depth -m "
 fi
 
-which dot 2>&1 > /dev/null
+which dot >/dev/null 2>&1
 [ $? -ne 0 ] && "Error: dot doesn't exist, please install graphviz..."
 
 echo "Command: ${calltree}${func} ${file} | ${tree2dotx} "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic"
@@ -155,6 +155,6 @@ ${calltree}${func} ${file} | ${tree2dotx} -f "${filterstr}" 2>/dev/null | dot -T
 echo "Target: ${file}: ${func} -> ${long_pic}"
 
 # Display it
-which $BROWSER 2>&1 > /dev/null
+which $BROWSER >/dev/null 2>&1
 [ $? -ne 0 ] && exit 0
 $BROWSER ${long_pic} &
