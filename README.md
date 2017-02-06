@@ -72,6 +72,12 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
                 $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
                 inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
 
+To simplify the above operations, three scripts are added for:
+
+    * install-docker-lab.sh: Install docker env of the lab
+    * start-docker-lab.hs:   Start the lab server with docker
+    * open-docker-lab.sh:    Open the lab via web browser
+
 Optional (bochs emulator instead of qemu)
 
     $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
