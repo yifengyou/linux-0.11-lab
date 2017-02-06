@@ -52,7 +52,7 @@ else
 fi
 [ -z "$file" ] && echo "Note: No file found for $func" && exit 1
 echo "File: $file"
-func=`echo "$match" | sed -n "$file_in,$file_in{s/.* \([a-zA-Z0-9_]*${func}[a-zA-Z0-9_]*\)(.*).*/\1/p}"`
+func=`echo "$match" | sed -n -e "${file_in},${file_in}p" | sed -n -e "s/.* \([a-zA-Z0-9_]*${func}[a-zA-Z0-9_]*\)(.*).*/\1/p"`
 [ -z "$func" ] && echo "Note: No such function found: $func" && exit 1
 
 # Genrate the calling tree of this function
