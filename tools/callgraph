@@ -68,7 +68,7 @@ function usage
         echo ""
 }
 
-while getopts "F:f:d:D:o:h" opt;
+while getopts "F:f:d:D:o:b:h" opt;
 do
         case $opt in
                 F)
@@ -87,6 +87,9 @@ do
                         output=$OPTARG
                         [ ! -d "$output" ] && mkdir -p $output
                         OUT_DIR=$output
+                ;;
+                b)
+                        BROWSER=$OPTARG
                 ;;
                 h|?)
                         usage $0;
@@ -156,6 +159,6 @@ ${calltree}${func} ${file} | ${tree2dotx} -f "${filterstr}" 2>/dev/null | dot -T
 echo "Target: ${file}: ${func} -> ${long_pic}"
 
 # Display it
-which cflow 2>&1 > /dev/null
+which $BROWSER 2>&1 > /dev/null
 [ $? -ne 0 ] && exit 0
 $BROWSER ${long_pic} &
