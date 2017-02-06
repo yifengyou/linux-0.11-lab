@@ -2,6 +2,6 @@
 Encoding=UTF-8
 Name=Demo Page
 Comment=Demonstration page
-Exec=/usr/bin/chromium-browser http://showterm.io/c000d06c8f89072554b59
+Exec=/usr/bin/chromium-browser http://showterm.io/ffb67385a07fd3fcec182
 Icon=/usr/share/pixmaps/chromium-browser.png
 Type=Application
