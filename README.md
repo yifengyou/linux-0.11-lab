@@ -13,13 +13,14 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux, M
 ### Linux Setup
 
 * A linux distribution: debian, ubuntu and mint are recommended
-* Some tools: gcc gdb qemu cscope ctags
+* Some tools: gcc gdb qemu cscope ctags cflow graphviz
 
     $ apt-get install vim cscope exuberant-ctags build-essential qemu
 
 Optional (bochs emulator instead of qemu)
 
     $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
+    $ sudo apt-get install graphviz cflow
 
     $ echo bochs > tools/vm.cfg       // switch to use bochs
     $ echo qemu > tools/vm.cfg        // switch back to use qemu
@@ -61,6 +62,11 @@ Optional
 * Install qemu
 
     $ sudo port install i386-elf-binutils i386-elf-gcc
+
+* Install graphviz and cflow
+
+    $ sudo port install GraphViz
+    $ sudo port install cflow
 
 * Install gdb. 'Cause port doesn't provide i386-elf-gdb, use the pre-compiled tools/mac/gdb.xz or download its source and compile it.
 
