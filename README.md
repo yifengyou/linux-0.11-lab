@@ -3,6 +3,8 @@ Linux 0.11 Lab
 
 The old Linux kernel source version [0.11](http://oldlinux.org) and the integrated experiment environment.
 
+[CS630 Qemu Lab](https://github.com/tinyclub/cs630-qemu-lab) is a related project, it is a friendly learning environment for the X86 assembly course: [CS630](http://www.cs.usfca.edu/%7Ecruse/cs630f06/).
+
 If want to learn the latest [Linux Kernel](http://www.kernel.org), please try our [Linux Lab](https://github.com/tinyclub/linux-lab)
 
 ![Linux 0.11 Lab Demo](images/linux-0.11-lab-with-docker-vncserver+novnc.jpg)
@@ -106,7 +108,7 @@ Optional
 
 ## Build on Mac OS X
 
-**Note**: A simpler method is use Docker Toolbox with our Dockerfile, see [Build on the other systems](#build-on-other-systems)
+**Note**: A simpler method is use Docker Toolbox with our Dockerfile, see [Build on the other systems](#build-on-other-systems-include-mac-os-x-windows)
 
 ### Mac OS X Setup
 
