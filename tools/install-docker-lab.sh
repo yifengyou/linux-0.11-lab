@@ -8,7 +8,7 @@ image_name=tinylab/linux-0.11-lab
 TOP_DIR=$(dirname `readlink -f $0`)
 
 docker_without_sudo=0
-groups falcon | grep -q docker
+groups $USER | grep -q docker
 [ $? -eq 0 ] && docker_without_sudo=1
 
 which docker 2>&1 > /dev/null
