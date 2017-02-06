@@ -27,11 +27,9 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
 
 
 - [Examples](#examples)
-    - [System Call](#system-call)
 
 - [Changes](#changes)
 
-<span id="introduction"></span>
 ## Introduction
 
 - Basic information
@@ -47,10 +45,8 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
     - a Dockerfile added to simplify this setup on other systems (e.g. Windows).
 
 
-<span id="build-on-linux"></span>
 ## Build on Linux
 
-<span id="linux-setup"></span>
 ### Linux Setup
 
 * The Linux distributions: debian and ubuntu are recommended
@@ -97,7 +93,6 @@ Optional (bochs emulator instead of qemu)
     $ make switch       // switch to another emulator, between qemu and bochs
     Switch to use emulator: bochs
 
-<span id="hack-linux-0.11-on-linux"></span>
 ### Hack Linux 0.11
 
     $ make help		// get help
@@ -119,12 +114,10 @@ Optional
 
     $ echo "add-auto-load-safe-path $PWD/.gdbinit" > ~/.gdbinit  // let gdb auto load the commands in .gdbinit
 
-<span id="build-on-mac-os-x"></span>
 ## Build on Mac OS X
 
 **Note**: A simpler method is use Docker Toolbox with our Dockerfile, see [Build on the other systems](#build-on-other-systems)
 
-<span id="mac-os-x-setup"></span>
 ### Mac OS X Setup
 
 * Install xcode from "App Store"
@@ -165,12 +158,10 @@ Optional
     $ ./configure --target=i386-elf
     $ make
 
-<span id="hack-linux-0.11-on-mac"></span>
 ### Hack Linux 0.11
 
 Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
 
-<span id="build-on-other-systems"></span>
 ## Build on Other Systems (include Mac OS X, Windows)
 
 If want to use this Lab on the other systems, such as Windows (and even Mac OS
@@ -180,7 +171,6 @@ Only need to install the docker toolbox, which is a lightweight Linux
 distribution made specifially to run Docker containers, with this tool and our
 Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 
-<span id="other-systems-setup"></span>
 ### Setup with Docker Toolbox and Dockerfile
 
 - Install Docker Toolbox and boot into it
@@ -199,12 +189,10 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
         $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
         inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
 
-<span id="hack-linux-0.11-on-other-systems"></span>
 ### Hack Linux 0.11
 
 Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
 
-<span id="hack-rootfs"></span>
 ## Hack Rootfs
 
 Three different root filesystem images are stored in `rootfs/`:
@@ -213,7 +201,6 @@ Three different root filesystem images are stored in `rootfs/`:
 * rootimage   -- Floppy image
 * hdc-0.11.img-- Harddisk image
 
-<span id="ram-image"></span>
 ### Ram image
 
 `rootram.img` is mountable directly:
@@ -221,7 +208,6 @@ Three different root filesystem images are stored in `rootfs/`:
     $ mkdir /path/to/rootram/
     $ sudo mount -o rootfs/rootram.img /path/to/rootram/
 
-<span id="floppy-image"></span>
 ### Floppy image
 
 `rootimage-0.11` is a minix filesystem, must with `-t minix` obviously:
@@ -229,7 +215,6 @@ Three different root filesystem images are stored in `rootfs/`:
     $ sudo mkdir /path/to/rootimage/
     $ sudo mount -t minix rootfs/rootimage-0.11 /path/to/rootimage
 
-<span id="hd-image"></span>
 ### Harddisk image
 
 `hdc-0.11.img` has a partition table, should be mounted with an offset:
@@ -251,14 +236,12 @@ Three different root filesystem images are stored in `rootfs/`:
 
     $ sudo mount -o offset=$((2*512)) rootfs/hdc-0.11.img /path/to/hdc/
 
-<span id="examples"></span>
 # Examples
 
 Some examples are stored in `examples/` with their own README.md:
 
 * syscall -- shows how to add a new system call
 
-<span id="changes"></span>
 ## Changes
 
 * 2015-03-15, falcon <wuzhangjin@gmail.com>
