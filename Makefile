@@ -1,4 +1,4 @@
-OS = Mac
+OS = $(shell uname)
 
 # indicate the path of the bochs
 #BOCHS=$(shell find tools/ -name "bochs" -perm 755 -type f)
