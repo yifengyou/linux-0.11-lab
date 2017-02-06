@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# calltree.sh -- Generate a calltree of a specified function in specified file/directory
+# callgraph -- Generate a callgraph of a specified function in specified file/directory
 #
 # -- Based on cflow and tree2dotx
 #
@@ -17,7 +17,7 @@ fi
 tree2dotx=${TOP_DIR}/tree2dotx
 
 # Output directory
-OUT_DIR=calltree
+OUT_DIR=callgraph
 PIC_TYPE=svg
 if [ "x$OS" == "xDarwin" ]; then
     BROWSER=/Applications/Safari.app/Contents/MacOS/Safari

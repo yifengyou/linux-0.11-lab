@@ -96,7 +96,7 @@ clean:
 	@make clean -C rootfs
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
 	@rm -f init/*.o images/kernel.sym boot/*.o typescript* info bochsout.txt
-	@make clean -C calltree
+	@make clean -C callgraph
 	@for i in mm fs kernel lib boot; do make clean -C $$i; done
 info:
 	@make clean
@@ -207,9 +207,8 @@ endif
 bochs-clean:
 	@make clean -C tools/bochs/bochs-2.3.7
 
-cg: callgraph
-callgraph:
-	@tools/calltree.sh $(f) $(d)
+cg:
+	@tools/callgraph $(f) $(d)
 
 help:
 	@echo "<<<<This is the basic help info of linux-0.11>>>"
