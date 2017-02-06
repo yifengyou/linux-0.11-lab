@@ -19,6 +19,39 @@ direction="LR"
 # Specify the symbols you not concern with space as decollator here
 filterstr="";
 
+# Usage
+
+function usage
+{
+        echo ""
+        echo "  $0 "
+        echo ""
+        echo "     [ -f  \"filter1 filter2 ...\" ]"
+        echo "     [ -s  size, ex: 1080,760; 1920,1080 ]"
+        echo "     [ -d  direction, ex: LR; TB ]"
+        echo "     -h  get help"
+        echo ""
+}
+
+while getopts "f:s:d:h" opt;
+do
+        case $opt in
+                f)
+                        filterstr=$OPTARG
+                ;;
+                s)
+                        size=$OPTARG
+                ;;
+                d)
+                        direction=$OPTARG
+                ;;
+                h|?)
+                        usage $0;
+                        exit 1;
+                ;;
+        esac
+done
+
 # Transfer the tree result to a file described in DOT language
 
 grep -v ^$ | grep -v "^[0-9]* director" \
