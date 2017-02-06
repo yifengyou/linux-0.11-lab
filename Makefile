@@ -125,7 +125,7 @@ help:
 	@echo "     make start -- start the kernel in vm (qemu/bochs)"
 	@echo "     make start-fd -- start the kernel with fs in floppy"
 	@echo "     make start-hd -- start the kernel with fs in hard disk"
-	@echo "     make start-hd G=0 -- start with curses based terminal, instead of SDL"
+	@echo "     make start-hd G=1 -- start with SDL instead of curses based terminal"
 	@echo ""
 	@echo ""
 	@echo "     :: Debug ::"
