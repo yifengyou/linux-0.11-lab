@@ -42,6 +42,9 @@ Image: boot/bootsect boot/setup kernel.sym ramfs
 	@rm -f images/kernel
 	@sync
 
+init/main.o:
+	@make main.o -C init/
+
 boot/head.o: boot/head.s
 	@make head.o -C boot/
 
@@ -85,18 +88,17 @@ boot/bootsect: boot/bootsect.s
 clean:
 	@make clean -C rootfs
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
-	@rm -f init/*.o images/kernel.sym boot/*.o typescript* info bochsout.txt
+	@rm -f images/kernel.sym boot/*.o typescript* info bochsout.txt
 	@make clean -C callgraph
-	@for i in mm fs kernel lib boot; do make clean -C $$i; done
+	@for i in init mm fs kernel lib boot; do make clean -C $$i; done
 
 distclean: clean
 	@rm -f tag* cscope* linux-0.11.*
 
 dep:
 	@sed '/\#\#\# Dependencies/q' < Makefile > tmp_make
-	@(for i in init/*.c;do echo -n "init/";$(CPP) -M $$i;done) >> tmp_make
 	@cp tmp_make Makefile
-	@for i in fs kernel mm; do make dep -C $$i; done
+	@for i in init fs kernel mm; do make dep -C $$i; done
 
 # Test on emulators with different prebuilt rootfs
 include Makefile.emulators
@@ -145,11 +147,3 @@ help:
 	@echo "     ~ Enjoy It ~"
 	@echo ""
 	@echo "-------------------Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)-------------------"
-
-### Dependencies:
-init/main.o: init/main.c include/unistd.h include/sys/stat.h \
-  include/sys/types.h include/sys/times.h include/sys/utsname.h \
-  include/utime.h include/time.h include/linux/tty.h include/termios.h \
-  include/linux/sched.h include/linux/head.h include/linux/fs.h \
-  include/linux/mm.h include/signal.h include/asm/system.h \
-  include/asm/io.h include/stddef.h include/stdarg.h include/fcntl.h

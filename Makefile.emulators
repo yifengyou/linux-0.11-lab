@@ -64,7 +64,7 @@ endif
 
 ramdisk-boot:
 	# Force init/main.o build with ramdisk support
-	make -B init/main.o RAMDISK=-DRAMDISK=2014
+	make -B init/main.o RAMDISK=2048
 
 start: ramdisk-boot Image
 	$(SETROOTDEV_CMD_RAM)
