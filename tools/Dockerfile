@@ -28,7 +28,6 @@ ADD lab.desktop /
 
 # Add lab-name
 ADD lab-name /
-ADD lab-uid /
 
 # Tune the screen size
 ADD supervisord.conf /etc/supervisor/conf.d/
