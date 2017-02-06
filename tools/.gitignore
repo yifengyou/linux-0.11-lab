@@ -3,3 +3,4 @@ system
 calltree
 *.cfg
 .vm.cfg
+.lab_local_port
