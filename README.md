@@ -63,7 +63,7 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
     * Build and Start the service
 
                 $ docker build -t tinylab/linux-0.11-lab ./
-                $ CONTAINER_ID=$(docker run -d -p 6080:6080 tinylab/linux-0.11-lab)
+                $ CONTAINER_ID=$(docker run -d -p 6080:6080 -v $PWD/:/linux-0.11-lab/ tinylab/linux-0.11-lab)
                 $ docker logs $CONTAINER_ID | sed -n 1p
                 User: ubuntu Pass: ubuntu
 
@@ -173,7 +173,7 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 - Build and Start the service
 
         $ docker build -t tinylab/linux-0.11-lab ./
-        $ CONTAINER_ID=$(docker run -d -p 6080:6080 dorowu/ubuntu-desktop-lxde-vnc)
+        $ CONTAINER_ID=$(docker run -d -p 6080:6080 -v $PWD/:/linux-0.11-lab/ tinylab/linux-0.11-lab)
         $ docker logs $CONTAINER_ID | sed -n 1p
         User: ubuntu Pass: ubuntu
 
