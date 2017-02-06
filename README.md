@@ -16,7 +16,7 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
     - [Hack Linux 0.11](#hack-linux-0.11-on-mac)
 
 - [Build on Other Systems (Include Mac OS X and Windows)](#build-on-other-systems)
-    - [Setup with Boot2Docker and Dockerfile](#other-systems-setup)
+    - [Setup with Docker Toolbox and Dockerfile](#other-systems-setup)
     - [Hack Linux 0.11](#hack-linux-0.11-on-other-systems)
 
 - [Changes](#changes)
@@ -49,13 +49,15 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
         $ apt-get install vim cscope exuberant-ctags build-essential qemu
 
 * Use with docker (everything is installed by default for you)
-    * Install docker
+    * Install docker engine (Official doc is [here](https://docs.docker.com/engine/installation/ubuntulinux/))
 
-                $ sudo apt-get install software-properties-common
-                $ sudo apt-get install python-software-properties
-                $ sudo add-apt-repository ppa:dotcloud/lxc-docker
+                $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+                $ sudo -s
+                $ version=`sed -n -e "/main$/p" /etc/apt/sources.list | head -1 | cut -d' ' -f3`
+                $ echo "deb https://apt.dockerproject.org/repo ubuntu-$(version) main" > /etc/apt/sources.list.d/docker.list
+                $ exit
                 $ sudo apt-get -y update
-                $ sudo apt-get install lxc-docker
+                $ sudo apt-get -y install docker-engine
 
     * Build and Start the service
 
@@ -102,7 +104,7 @@ Optional
 <span id="build-on-mac-os-x"></span>
 ## Build on Mac OS X
 
-**Note**: A simpler method is use Boot2Docker with our Dockerfile, see [Build on the other systems](#build-on-other-systems)
+**Note**: A simpler method is use Docker Toolbox with our Dockerfile, see [Build on the other systems](#build-on-other-systems)
 
 <span id="mac-os-x-setup"></span>
 ### Mac OS X Setup
@@ -156,16 +158,16 @@ Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
 If want to use this Lab on the other systems, such as Windows (and even Mac OS
 X), with the Dockerfile support, everything is simplified.
 
-Only need to install the boot2docker tool, which is a lightweight Linux
+Only need to install the docker toolbox, which is a lightweight Linux
 distribution made specifially to run Docker containers, with this tool and our
 Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 
 <span id="other-systems-setup"></span>
-### Setup with Boot2Docker and Dockerfile
+### Setup with Docker Toolbox and Dockerfile
 
-- Install Boot2Docker and boot into it
+- Install Docker Toolbox and boot into it
 
-    please follow [Boot2Docker Installation](https://github.com/boot2docker/boot2docker#installation).
+    please follow [Docker Toolbox Installation](https://www.docker.com/docker-toolbox).
 
 - Build and Start the service
 
