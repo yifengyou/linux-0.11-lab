@@ -18,7 +18,7 @@ if [ $? -eq 1 ]; then
     sudo bash -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-'${version}' main" > /etc/apt/sources.list.d/docker.list'
     sudo apt-get -y update
     sudo apt-get -y install apt-transport-https ca-certificates
-    sudo apt-get -y install docker-engine
+    sudo apt-get -y --force-yes install docker-engine
     sudo usermod -aG docker $USER
 
     # The --bip works like https://gist.github.com/ismell/6689836
