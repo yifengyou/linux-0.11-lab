@@ -68,7 +68,7 @@ endif
 
 # Allow to use curses based console via ssh
 VM_DISPLAY =
-ifeq ($(G),)
+ifeq ($(G),0)
 ifeq ($(VM), bochs)
 	VM_DISPLAY = .term
 else
