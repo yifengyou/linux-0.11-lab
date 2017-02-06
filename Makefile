@@ -149,3 +149,5 @@ help:
 	@echo "     ~ Enjoy It ~"
 	@echo ""
 	@echo "-------------------Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)-------------------"
+	@echo ""
+	@echo "--------------->   Linux Kernel Lab (http://tinylab.org/linux-lab)   <------------------"
