@@ -70,7 +70,7 @@ With Docker:
         $ tools/run-docker-lab.sh
         $ tools/open-docker-lab.sh
 
-* Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html` with 'ubuntu' as password
+* The above command will start a VNC page, login with 'ubuntu' as password
 
 Optional (bochs emulator instead of qemu)
 
@@ -177,7 +177,7 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
         $ tools/run-docker-lab.sh
         $ tools/open-docker-lab.sh
 
-- Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html` with 'ubuntu' password
+- The above command with start a VNC page, login with 'ubuntu' password
 
 ### Hack Linux 0.11 on other systems
 
