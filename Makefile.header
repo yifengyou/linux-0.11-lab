@@ -6,12 +6,10 @@ QEMU = qemu-system-x86_64
 # Tool for specify root device
 SETROOTDEV = tools/setrootdev.sh
 
-# specify the Hardware Image file
+# Specify the Hardware Image file
 HDA_IMG = hdc-0.11.img
 FLP_IMG = rootimage-0.11
 RAM_IMG = rootram.img
-
-IMG_SUFFIX = xz
 
 ifeq ($(UNAME), Linux)
 	AS	= as --32
@@ -25,11 +23,7 @@ ifeq ($(UNAME), Linux)
 	AR	= ar
 	STRIP = strip
 	OBJCOPY = objcopy
-	# we should use -fno-stack-protector with gcc 4.3
-	gcc_version=$(shell ls -l `which gcc` | tr '-' '\n' | tail -1)
 endif
-
-
 
 ifeq ($(UNAME), Darwin)
 	AS	= i386-elf-as --32
@@ -44,5 +38,3 @@ ifeq ($(UNAME), Darwin)
 	STRIP = i386-elf-strip
 	OBJCOPY = i386-elf-objcopy
 endif
-
-
