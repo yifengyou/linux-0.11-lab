@@ -157,6 +157,18 @@ BOCHS_CMD_HDA = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-hd.bxrc
 BOCHS_DBG = .dbg
 
 ifeq ($(VM), bochs)
+        NEW_VM=qemu
+else
+        NEW_VM=bochs
+endif
+
+switch:
+	@echo "Switch to use emulator: $(NEW_VM)"
+	@echo $(NEW_VM) > $(VM_CFG)
+
+VM=$(shell cat $(VM_CFG))
+
+ifeq ($(VM), bochs)
         VM_CMD = $(BOCHS_CMD)
         VM_CMD_FDB = $(BOCHS_CMD_FDB)
         VM_CMD_HDA = $(BOCHS_CMD_HDA)
@@ -224,7 +236,7 @@ cg:
 	@tools/callgraph -f $(f) -d $(d) -b $(b)
 
 help:
-	@echo "<<<<This is the basic help info of linux-0.11>>>"
+	@echo ":::::::::::::::::::::::: Linux 0.11 Lab (http://tinylab.org) ::::::::::::::::::::::::"
 	@echo ""
 	@echo "Usage:"
 	@echo "     make --generate a kernel floppy Image with a fs on hda1"
@@ -236,6 +248,7 @@ help:
 	@echo "     make debug-hd -- debug the kernel with fs in hard disk"
 	@echo "     make disk  -- generate a kernel Image & copy it to floppy"
 	@echo "     make cscope -- genereate the cscope index databases"
+	@echo "     make switch -- switch the emulator: qemu and bochs"
 	@echo "     make tags -- generate the tag file"
 	@echo "     make cg -- generate callgraph of the default main entry"
 	@echo "     make cg f=func d=dir|file b=browser -- generate callgraph of func in file/directory"
@@ -262,7 +275,7 @@ help:
 	@echo "     * 2012, yuanxinyu<yuanxinyu.hangzhou@gmail.com> add Mac OS X support."
 	@echo "     * 2015, falcon <wuzhangjin@gmail.com> back reorganize and maintain it."
 	@echo ""
-	@echo "<<<Be Happy To Play With It :-)>>>"
+	@echo "Enjoy It~"
 
 ### Dependencies:
 init/main.o: init/main.c include/unistd.h include/sys/stat.h \

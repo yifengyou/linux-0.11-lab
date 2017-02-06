@@ -7,7 +7,8 @@ QEMU = qemu-system-i386
 BOCHS = bochs
 
 # VM
-VM = $(shell cat tools/vm.cfg)
+VM_CFG = tools/vm.cfg
+VM = $(shell cat $(VM_CFG))
 
 # Tool for specify root device
 SETROOTDEV = tools/setrootdev.sh

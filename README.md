@@ -1,12 +1,12 @@
-Linux-0.11
-==========
+Linux 0.11 Lab
+==============
 
 The old Linux kernel source ver 0.11 which has been tested under modern Linux, Mac OSX.
 
-* 2008-10-15, falcon <wuzhangjin@gmail.com>
-* 2011-07-31, tigercn <moonlight.yang@gmail.com>
-* 2012-04-30, yuanxinyu <yuanxinyu.hangzhou@gmail.com>
 * 2015-03-15, falcon <wuzhangjin@gmail.com>
+* 2012-04-30, yuanxinyu <yuanxinyu.hangzhou@gmail.com>
+* 2011-07-31, tigercn <moonlight.yang@gmail.com>
+* 2008-10-15, falcon <wuzhangjin@gmail.com>
 
 ## Build on Linux
 
@@ -22,8 +22,8 @@ Optional (bochs emulator instead of qemu)
     $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
     $ sudo apt-get install graphviz cflow
 
-    $ echo bochs > tools/vm.cfg       // switch to use bochs
-    $ echo qemu > tools/vm.cfg        // switch back to use qemu
+    $ make switch       // switch to another emulator, between qemu and bochs
+    Switch to use emulator: bochs
 
 ### hack linux-0.11
 
