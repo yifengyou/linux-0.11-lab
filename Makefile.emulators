@@ -3,13 +3,13 @@
 # Rootfs preparation
 
 hda:
-	@make hda -C rootfs
+	@make -s hda -C rootfs
 
 flp:
-	@make flp -C rootfs
+	@make -s flp -C rootfs
 
 ramfs:
-	@make ramfs -C rootfs
+	@make -s ramfs -C rootfs
 
 # VM (Qemu/Bochs) Setting for different rootfs
 
@@ -32,9 +32,9 @@ nullstring :=
 QEMU_DBG = $(nullstring) -s -S #-nographic #-serial '/dev/ttyS0'"
 
 BOCHS_CFG = tools/bochs/bochsrc/
-BOCHS_CMD = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fda.bxrc
-BOCHS_CMD_FDB = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
-BOCHS_CMD_HDA = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-hd.bxrc
+BOCHS_CMD = $(BOCHS) -q -f $(BOCHS_CFG)/bochsrc-fda.bxrc
+BOCHS_CMD_FDB = $(BOCHS) -q -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
+BOCHS_CMD_HDA = $(BOCHS) -q -f $(BOCHS_CFG)/bochsrc-hd.bxrc
 BOCHS_DBG = .dbg
 
 VM = $(shell cat $(VM_CFG) 2>/dev/null)
@@ -77,30 +77,34 @@ endif
 
 ramdisk-boot:
 	@# Force init/main.o build with ramdisk support
-	make -B init/main.o RAMDISK=2048
+	@make -s -B init/main.o RAMDISK=2048
+
+boot-hd: start-hd
+boot-fd: start-fd
+boot: start
 
 start: ramdisk-boot Image
-	$(SETROOTDEV_CMD_RAM)
+	@$(SETROOTDEV_CMD_RAM)
 	$(VM_CMD)$(VM_DISPLAY)
 
 start-fd: Image flp
-	$(SETROOTDEV_CMD_FDB)
+	@$(SETROOTDEV_CMD_FDB)
 	$(VM_CMD_FDB)$(VM_DISPLAY)
 
 start-hd: Image hda
-	$(SETROOTDEV_CMD_HDA)
+	@$(SETROOTDEV_CMD_HDA)
 	$(VM_CMD_HDA)$(VM_DISPLAY)
 
 # Debugging the above targets
 
 debug: ramdisk-boot Image
-	$(SETROOTDEV_CMD_RAM)
+	@$(SETROOTDEV_CMD_RAM)
 	$(VM_CMD)$(VM_DBG)$(VM_DISPLAY)
 
 debug-fd: Image flp
-	$(SETROOTDEV_CMD_FDB)
+	@$(SETROOTDEV_CMD_FDB)
 	$(VM_CMD_FDB)$(VM_DBG)$(VM_DISPLAY)
 
 debug-hd: Image hda
-	$(SETROOTDEV_CMD_HDA)
+	@$(SETROOTDEV_CMD_HDA)
 	$(VM_CMD_HDA)$(VM_DBG)$(VM_DISPLAY)

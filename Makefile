@@ -37,16 +37,16 @@ Image: boot/bootsect boot/setup kernel.sym ramfs FORCE
 	@cp -f images/kernel.sym images/kernel.tmp
 	@$(STRIP) images/kernel.tmp
 	@$(OBJCOPY) -O binary -R .note -R .comment images/kernel.tmp images/kernel
-	$(BUILD) boot/bootsect boot/setup images/kernel images/Image
+	@$(BUILD) boot/bootsect boot/setup images/kernel images/Image
 	@rm images/kernel.tmp
 	@rm -f images/kernel
 	@sync
 
 init/main.o: FORCE
-	@make main.o -C init/
+	@make -s main.o -C init/
 
 boot/head.o: boot/head.s FORCE
-	@make head.o -C boot/
+	@make -s head.o -C boot/
 
 kernel.sym: boot/head.o init/main.o \
 		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
@@ -59,38 +59,38 @@ kernel.sym: boot/head.o init/main.o \
 	@nm images/kernel.sym | grep -v '\(compiled\)\|\(\.o$$\)\|\( [aU] \)\|\(\.\.ng$$\)\|\(LASH[RL]DI\)'| sort > images/kernel.map
 
 kernel/math/math.a: FORCE
-	@make -C kernel/math
+	@make -s -C kernel/math
 
 kernel/blk_drv/blk_drv.a: FORCE
-	@make -C kernel/blk_drv
+	@make -s -C kernel/blk_drv
 
 kernel/chr_drv/chr_drv.a: FORCE
-	@make -C kernel/chr_drv
+	@make -s -C kernel/chr_drv
 
 kernel/kernel.o: FORCE
-	@make -C kernel
+	@make -s -C kernel
 
 mm/mm.o: FORCE
-	@make -C mm
+	@make -s -C mm
 
 fs/fs.o: FORCE
-	@make -C fs
+	@make -s -C fs
 
 lib/lib.a: FORCE
-	@make -C lib
+	@make -s -C lib
 
 boot/setup: boot/setup.s FORCE
-	@make setup -C boot
+	@make -s setup -C boot
 
 boot/bootsect: boot/bootsect.s FORCE
-	@make bootsect -C boot
+	@make -s bootsect -C boot
 
 clean:
-	@make clean -C rootfs
+	@make -s clean -C rootfs
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
 	@rm -f images/kernel.sym boot/*.o typescript* info bochsout.txt
-	@make clean -C callgraph
-	@for i in init mm fs kernel lib boot; do make clean -C $$i; done
+	@make -s clean -C callgraph
+	@for i in init mm fs kernel lib boot; do make -s clean -C $$i; done
 
 distclean: clean
 	@rm -f tag* cscope* linux-0.11.*
@@ -98,7 +98,7 @@ distclean: clean
 dep:
 	@sed '/\#\#\# Dependencies/q' < Makefile > tmp_make
 	@cp tmp_make Makefile
-	@for i in init fs kernel mm; do make dep -C $$i; done
+	@for i in init fs kernel mm; do make -s dep -C $$i; done
 
 # Test on emulators with different prebuilt rootfs
 include Makefile.emulators
@@ -112,7 +112,7 @@ include Makefile.callgraph
 FORCE: ;
 
 help:
-	@echo "------------------Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)------------------"
+	@echo "-----Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)-----"
 	@echo ""
 	@echo "     :: Compile ::"
 	@echo ""
@@ -149,6 +149,6 @@ help:
 	@echo ""
 	@echo "     ~ Enjoy It ~"
 	@echo ""
-	@echo "-------------------Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)-------------------"
+	@echo "-----Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)-----"
 	@echo ""
-	@echo "--------------->   Linux Kernel Lab (http://tinylab.org/linux-lab)   <------------------"
+	@echo "--->  Linux Kernel Lab (http://tinylab.org/linux-lab)   <---"

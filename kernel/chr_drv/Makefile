@@ -25,7 +25,7 @@ OBJS  = tty_io.o console.o keyboard.o serial.o rs_io.o \
 
 chr_drv.a: $(OBJS)
 	@$(AR) rcs chr_drv.a $(OBJS)
-	sync
+	@sync
 
 keyboard.s: kb.S ../../include/linux/config.h
 	@$(CPP) kb.S -o keyboard.s
