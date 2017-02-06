@@ -37,7 +37,7 @@ optional
 
 * install cross compiler gcc and binutils
 * install qemu
-* install gdb. you need download the gdb source and compile it to use gdb because port doesn't provide i386-elf-gdb, or you can use the pre-compiled gdb in the tools directory.
+* install gdb. you need download the gdb source and compile it to use gdb because port doesn't provide i386-elf-gdb, or you can use the pre-compiled gdb in the tools/mac/ directory.
 
     $ sudo port install qemu
     $ sudo port install i386-elf-binutils i386-elf-gcc
