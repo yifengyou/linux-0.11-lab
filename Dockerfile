@@ -13,6 +13,8 @@ RUN apt-get install -y graphviz cflow
 
 RUN apt-get install -y git ca-certificates
 
+RUN apt-get install -y xz-utils
+
 EXPOSE 6080
 EXPOSE 5900
 EXPOSE 22
