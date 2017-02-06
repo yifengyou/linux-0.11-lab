@@ -98,92 +98,11 @@ dep:
 	@cp tmp_make Makefile
 	@for i in fs kernel mm; do make dep -C $$i; done
 
-tag: tags
-tags:
-	@ctags -R
+# Test on emulators with different prebuilt rootfs
+include Makefile.emulators
 
-cscope:
-	@cscope -Rbkq
-
-hda:
-	@make hda -C rootfs
-
-flp:
-	@make flp -C rootfs
-
-ramfs:
-	@make ramfs -C rootfs
-
-# VM (Qemu/Bochs) Setting for different rootfs
-
-ROOT_RAM = 0000
-ROOT_FDB = 021d
-ROOT_HDA = 0301
-
-SETROOTDEV_CMD = $(SETROOTDEV) images/Image
-SETROOTDEV_CMD_RAM = $(SETROOTDEV_CMD) $(ROOT_RAM)
-SETROOTDEV_CMD_FDB = $(SETROOTDEV_CMD) $(ROOT_FDB)
-SETROOTDEV_CMD_HDA = $(SETROOTDEV_CMD) $(ROOT_HDA)
-
-QEMU_CMD = $(QEMU) -m 16M -boot a -fda images/Image
-QEMU_CMD_FDB = $(QEMU_CMD) -fdb rootfs/$(FLP_IMG)
-QEMU_CMD_HDA = $(QEMU_CMD) -hda rootfs/$(HDA_IMG)
-nullstring :=
-QEMU_DBG = $(nullstring) -s -S #-nographic #-serial '/dev/ttyS0'"
-
-BOCHS_CFG = tools/bochs/bochsrc/
-BOCHS_CMD = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fda.bxrc
-BOCHS_CMD_FDB = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
-BOCHS_CMD_HDA = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-hd.bxrc
-BOCHS_DBG = .dbg
-
-ifeq ($(VM), bochs)
-        NEW_VM=qemu
-else
-        NEW_VM=bochs
-endif
-
-switch:
-	@echo "Switch to use emulator: $(NEW_VM)"
-	@echo $(NEW_VM) > $(VM_CFG)
-
-VM=$(shell cat $(VM_CFG))
-
-ifeq ($(VM), bochs)
-        VM_CMD = $(BOCHS_CMD)
-        VM_CMD_FDB = $(BOCHS_CMD_FDB)
-        VM_CMD_HDA = $(BOCHS_CMD_HDA)
-        VM_DBG = $(BOCHS_DBG)
-else
-        VM_CMD = $(QEMU_CMD)
-        VM_CMD_FDB = $(QEMU_CMD_FDB)
-        VM_CMD_HDA = $(QEMU_CMD_HDA)
-        VM_DBG = $(QEMU_DBG)
-endif
-
-start: Image
-	$(SETROOTDEV_CMD_RAM)
-	$(VM_CMD)
-
-start-fd: Image flp
-	$(SETROOTDEV_CMD_FDB)
-	$(VM_CMD_FDB)
-
-start-hd: Image hda
-	$(SETROOTDEV_CMD_HDA)
-	$(VM_CMD_HDA)
-
-debug: Image
-	$(SETROOTDEV_CMD_RAM)
-	$(VM_CMD)$(VM_DBG)
-
-debug-fd: Image flp
-	$(SETROOTDEV_CMD_FDB)
-	$(VM_CMD_FDB)$(VM_DBG)
-
-debug-hd: Image hda
-	$(SETROOTDEV_CMD_HDA)
-	$(VM_CMD_HDA)$(VM_DBG)
+# Tags for source code reading
+include Makefile.tags
 
 # For Call graph generation
 include Makefile.callgraph
@@ -199,8 +118,8 @@ help:
 	@echo "     make debug -- debug the kernel in qemu/bochs & gdb at port 1234"
 	@echo "     make debug-fd -- debug the kernel with fs in floppy"
 	@echo "     make debug-hd -- debug the kernel with fs in hard disk"
-	@echo "     make cscope -- genereate the cscope index databases"
 	@echo "     make switch -- switch the emulator: qemu and bochs"
+	@echo "     make cscope -- genereate the cscope index databases"
 	@echo "     make tags -- generate the tag file"
 	@echo "     make cg -- generate callgraph of the default main entry"
 	@echo "     make cg f=func d=dir|file b=browser -- generate callgraph of func in file/directory"

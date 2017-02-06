@@ -1,0 +1,89 @@
+# Allow to run kernel on different emulators with different prebuilt rootfs
+
+# Rootfs preparation
+
+hda:
+	@make hda -C rootfs
+
+flp:
+	@make flp -C rootfs
+
+ramfs:
+	@make ramfs -C rootfs
+
+# VM (Qemu/Bochs) Setting for different rootfs
+
+ROOT_RAM = 0000
+ROOT_FDB = 021d
+ROOT_HDA = 0301
+
+SETROOTDEV_CMD = $(SETROOTDEV) images/Image
+SETROOTDEV_CMD_RAM = $(SETROOTDEV_CMD) $(ROOT_RAM)
+SETROOTDEV_CMD_FDB = $(SETROOTDEV_CMD) $(ROOT_FDB)
+SETROOTDEV_CMD_HDA = $(SETROOTDEV_CMD) $(ROOT_HDA)
+
+QEMU_CMD = $(QEMU) -m 16M -boot a -fda images/Image
+QEMU_CMD_FDB = $(QEMU_CMD) -fdb rootfs/$(FLP_IMG)
+QEMU_CMD_HDA = $(QEMU_CMD) -hda rootfs/$(HDA_IMG)
+nullstring :=
+QEMU_DBG = $(nullstring) -s -S #-nographic #-serial '/dev/ttyS0'"
+
+BOCHS_CFG = tools/bochs/bochsrc/
+BOCHS_CMD = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fda.bxrc
+BOCHS_CMD_FDB = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-fdb.bxrc
+BOCHS_CMD_HDA = $(BOCHS) -f $(BOCHS_CFG)/bochsrc-hd.bxrc
+BOCHS_DBG = .dbg
+
+VM = $(shell cat $(VM_CFG))
+
+ifeq ($(VM), bochs)
+        NEW_VM=qemu
+else
+        NEW_VM=bochs
+endif
+
+switch:
+	@echo "Switch to use emulator: $(NEW_VM)"
+	@echo $(NEW_VM) > $(VM_CFG)
+
+VM=$(shell cat $(VM_CFG))
+
+ifeq ($(VM), bochs)
+        VM_CMD = $(BOCHS_CMD)
+        VM_CMD_FDB = $(BOCHS_CMD_FDB)
+        VM_CMD_HDA = $(BOCHS_CMD_HDA)
+        VM_DBG = $(BOCHS_DBG)
+else
+        VM_CMD = $(QEMU_CMD)
+        VM_CMD_FDB = $(QEMU_CMD_FDB)
+        VM_CMD_HDA = $(QEMU_CMD_HDA)
+        VM_DBG = $(QEMU_DBG)
+endif
+
+# Running on emulators with differrent rootfs
+
+start: Image
+	$(SETROOTDEV_CMD_RAM)
+	$(VM_CMD)
+
+start-fd: Image flp
+	$(SETROOTDEV_CMD_FDB)
+	$(VM_CMD_FDB)
+
+start-hd: Image hda
+	$(SETROOTDEV_CMD_HDA)
+	$(VM_CMD_HDA)
+
+# Debugging the above targets
+
+debug: Image
+	$(SETROOTDEV_CMD_RAM)
+	$(VM_CMD)$(VM_DBG)
+
+debug-fd: Image flp
+	$(SETROOTDEV_CMD_FDB)
+	$(VM_CMD_FDB)$(VM_DBG)
+
+debug-hd: Image hda
+	$(SETROOTDEV_CMD_HDA)
+	$(VM_CMD_HDA)$(VM_DBG)

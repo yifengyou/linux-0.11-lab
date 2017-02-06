@@ -1,0 +1,7 @@
+tag: tags
+tags:
+	@ctags -R
+
+cscope:
+	@cscope -Rbkq
+
