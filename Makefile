@@ -96,7 +96,7 @@ clean:
 	@make clean -C rootfs
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
 	@rm -f init/*.o images/kernel.sym boot/*.o typescript* info bochsout.txt
-	@rm -f calltree/*.dot calltree/*.jpg
+	@make clean -C calltree
 	@for i in mm fs kernel lib boot; do make clean -C $$i; done
 info:
 	@make clean
@@ -209,8 +209,7 @@ bochs-clean:
 
 cg: callgraph
 callgraph:
-	@tools/calltree -b -np -m init/main.c | tools/tree2dotx > calltree/linux-0.11.dot
-	@dot -Tjpg calltree/linux-0.11.dot -o calltree/linux-0.11.jpg
+	@tools/calltree.sh $(f) $(d)
 
 help:
 	@echo "<<<<This is the basic help info of linux-0.11>>>"
@@ -226,13 +225,14 @@ help:
 	@echo "     make disk  -- generate a kernel Image & copy it to floppy"
 	@echo "     make cscope -- genereate the cscope index databases"
 	@echo "     make tags -- generate the tag file"
-	@echo "     make cg -- generate callgraph of the system architecture"
+	@echo "     make cg -- generate callgraph of the default main entry"
+	@echo "     make cg f=func d=dir|file -- generate callgraph of func in file/directory"
 	@echo "     make clean -- clean the object files"
 	@echo "     make distclean -- only keep the source code files"
 	@echo ""
 	@echo "Note!:"
 	@echo "     * You need to install the following basic tools:"
-	@echo "          ubuntu|debian, qemu|bochs, ctags, cscope, calltree, graphviz "
+	@echo "          ubuntu|debian, qemu|bochs, ctags, cscope, calltree, cflow, graphviz "
 	@echo "          vim-full, build-essential, hex, dd, gcc 4.3.2..."
 	@echo "     * Becarefull to change the compiling options, which will heavily"
 	@echo "     influence the compiling procedure and running result."
