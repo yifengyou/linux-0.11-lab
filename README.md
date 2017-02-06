@@ -51,41 +51,20 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
 
 ### Linux Setup
 
-* The Linux distributions: debian and ubuntu are recommended
-* Some tools: gcc gdb qemu cscope ctags cflow graphviz
+* The Linux distributions: debian and ubuntu (>= 14.04) are recommended
+* Install the lab
 
-        $ apt-get install vim cscope exuberant-ctags build-essential qemu
+In localhost:
 
-* Use with docker (everything is installed by default for you)
-    * Install docker engine (Official doc is [here](https://docs.docker.com/engine/installation/linux/))
+        $ tools/install-local-lab.sh
 
-                $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-                $ sudo -s
-                $ version=`sed -n -e "/main$/p" /etc/apt/sources.list | head -1 | cut -d' ' -f3`
-                $ echo "deb https://apt.dockerproject.org/repo ubuntu-${version} main" > /etc/apt/sources.list.d/docker.list
-                $ exit
-                $ sudo apt-get -y update
-                $ sudo apt-get -y install docker-engine
-                $ sudo usermod -aG docker $USER
-                $ pkill X
+With Docker:
 
-    * Build and Start the service
+        $ tools/install-docker-lab.sh
+        $ tools/run-docker-lab.sh
+        $ tools/open-docker-lab.sh
 
-                $ docker build -t tinylab/linux-0.11-lab ./
-                $ CONTAINER_ID=$(docker run -d -p 6080:6080 -v $PWD/:/linux-0.11-lab/ tinylab/linux-0.11-lab)
-                $ docker logs $CONTAINER_ID | sed -n 1p
-                User: ubuntu Pass: ubuntu
-
-    * Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html` with 'ubuntu' as password
-
-                $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
-                inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
-
-To simplify the above operations, three scripts are added for:
-
-    * tools/install-docker-lab.sh: Install docker env of the lab
-    * tools/run-docker-lab.sh:     Start the lab server with docker
-    * tools/open-docker-lab.sh:    Open the lab via web browser
+* Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html` with 'ubuntu' as password
 
 Optional (bochs emulator instead of qemu)
 
@@ -187,15 +166,11 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 
 - Build and Start the service
 
-        $ docker build -t tinylab/linux-0.11-lab ./
-        $ CONTAINER_ID=$(docker run -d -p 6080:6080 -v $PWD/:/linux-0.11-lab/ tinylab/linux-0.11-lab)
-        $ docker logs $CONTAINER_ID | sed -n 1p
-        User: ubuntu Pass: ubuntu
+        $ tools/install-docker-lab.sh
+        $ tools/run-docker-lab.sh
+        $ tools/open-docker-lab.sh
 
-- Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html`
-
-        $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
-        inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+- Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html` with 'ubuntu' password
 
 ### Hack Linux 0.11 on other systems
 
