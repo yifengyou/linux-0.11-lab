@@ -137,29 +137,29 @@ flp:
 ramfs:
 	@make ramfs -C rootfs
 
-start:
+start: Image
 	@$(SETROOTDEV) images/Image 0000
 	$(QEMU) -m 16M -boot a -fda images/Image
 
-start-fd: flp
+start-fd: Image flp
 	@$(SETROOTDEV) images/Image 021d
 	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG)
 
-start-hd: hda
+start-hd: Image hda
 	@$(SETROOTDEV) images/Image 0301
 	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG)
 
-debug:
+debug: Image
 	@echo $(OS)
 	@$(SETROOTDEV) images/Image 0000
 	$(QEMU) -m 16M -boot a -fda images/Image -s -S #-nographic #-serial '/dev/ttyS0'
 
-debug-fd: flp
+debug-fd: Image flp
 	@echo $(OS)
 	@$(SETROOTDEV) images/Image 021d
 	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG) -s -S #-nographic #-serial '/dev/ttyS0'
 
-debug-hd: hda
+debug-hd: Image hda
 	@echo $(OS)
 	@$(SETROOTDEV) images/Image 0301
 	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG) -s -S #-nographic #-serial '/dev/ttyS0'
