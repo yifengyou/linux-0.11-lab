@@ -24,7 +24,7 @@ RAM_IMG = rootram.img
 CG = tools/callgraph
 
 ifeq ($(OS), Linux)
-	AS	= as --32
+	AS	= as -g --32
 	LD	= ld
 	LDFLAGS = -m elf_i386
 	CC	= gcc
@@ -37,7 +37,7 @@ ifeq ($(OS), Linux)
 endif
 
 ifeq ($(OS), Darwin)
-	AS	= i386-elf-as --32
+	AS	= i386-elf-as -g --32
 	LD	= i386-elf-ld
 	LDFLAGS = -m elf_i386
 	CC	= i386-elf-gcc

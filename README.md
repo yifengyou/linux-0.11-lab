@@ -105,9 +105,15 @@ Optional (bochs emulator instead of qemu)
     (gdb) b main
     (gdb) c
 
-                        // to debug the bootsect or setup part, please load the symbol files
-    $ gdb boot/bootsect.sym
-    $ gdb boot/setup.sym
+    $ gdb boot/bootsect.sym  // debug bootsect, step one instruction
+    (gdb) target remote :1234
+    (gdb) b _start
+    (gdb) si
+
+    $ gdb boot/setup.sym     // debug setup, similar as above
+    (gdb) target remote :1234
+    (gdb) b _start
+    (gdb) si
 
 
 Optional
