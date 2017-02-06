@@ -152,7 +152,7 @@ else
         [ -n "$depth" ] && depth=" -d $depth "
         calltree="cflow -b $depth -m "
 fi
-echo "${calltree}${func} ${file} | ${tree2dotx} "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic"
+echo "Command: ${calltree}${func} ${file} | ${tree2dotx} "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic"
 ${calltree}${func} ${file} | ${tree2dotx} -f "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic
 
 # Tell users
