@@ -3,8 +3,9 @@
 mkdir -p /var/run/sshd
 
 # create an ubuntu user
-PASS=`pwgen -c -n -1 10`
-echo "Username: ubuntu Password: $PASS"
+UNIX_PASS=`pwgen -c -n -1 10`
+VNC_PASS=`pwgen -c -n -1 10`
+echo "Username: ubuntu Password: $UNIX_PASS VNC-Password: $VNC_PASS"
 
 id -u ubuntu &>/dev/null || useradd --create-home --shell /bin/bash --user-group --groups adm,sudo ubuntu
 
@@ -13,9 +14,9 @@ sudo cp /linux-lab.desktop /home/ubuntu/Desktop/
 sudo chown ubuntu:ubuntu -R /home/ubuntu/
 
 sudo -u ubuntu mkdir /home/ubuntu/.vnc/
-sudo -u ubuntu x11vnc -storepasswd $PASS /home/ubuntu/.vnc/passwd
+sudo -u ubuntu x11vnc -storepasswd $VNC_PASS /home/ubuntu/.vnc/passwd
 
-echo "ubuntu:$PASS" | chpasswd
+echo "ubuntu:$UNIX_PASS" | chpasswd
 sudo -u ubuntu -i bash -c "mkdir -p /home/ubuntu/.config/pcmanfm/LXDE/ \
     && cp /usr/share/doro-lxde-wallpapers/desktop-items-0.conf /home/ubuntu/.config/pcmanfm/LXDE/"
 
