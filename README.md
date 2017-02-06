@@ -129,11 +129,11 @@ Optional
 
 * Install cross compiler gcc and binutils
 
-        $ sudo port install qemu
+        $ sudo port install i386-elf-binutils i386-elf-gcc 
 
 * Install qemu
 
-        $ sudo port install i386-elf-binutils i386-elf-gcc
+        $ sudo port install qemu
 
 * Install graphviz and cflow
 
