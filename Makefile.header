@@ -1,7 +1,7 @@
 UNAME := $(shell uname)
 
 # Qemu
-QEMU = qemu-system-x86_64
+QEMU = qemu-system-i386
 
 # Tool for specify root device
 SETROOTDEV = tools/setrootdev.sh
