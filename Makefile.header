@@ -1,6 +1,7 @@
 OS := $(shell uname)
 
 # Qemu
+QEMU_PATH =
 QEMU = qemu-system-i386
 
 # Bochs
@@ -32,8 +33,9 @@ ifeq ($(OS), Linux)
 
 	CPP	= cpp -nostdinc
 	AR	= ar
-	STRIP = strip
+	STRIP	= strip
 	OBJCOPY = objcopy
+	QEMU_PATH= tools/qemu/
 endif
 
 ifeq ($(OS), Darwin)
