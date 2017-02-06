@@ -3,13 +3,13 @@
 # Rootfs preparation
 
 hda:
-	@make -s hda -C rootfs
+	@make hda -C rootfs
 
 flp:
-	@make -s flp -C rootfs
+	@make flp -C rootfs
 
 ramfs:
-	@make -s ramfs -C rootfs
+	@make ramfs -C rootfs
 
 # VM (Qemu/Bochs) Setting for different rootfs
 
@@ -77,7 +77,7 @@ endif
 
 ramdisk-boot:
 	@# Force init/main.o build with ramdisk support
-	@make -s -B init/main.o RAMDISK=2048
+	@make -B init/main.o RAMDISK=2048
 
 boot-hd: start-hd
 boot-fd: start-fd

@@ -43,10 +43,10 @@ Image: boot/bootsect boot/setup kernel.sym ramfs FORCE
 	@sync
 
 init/main.o: FORCE
-	@make -s main.o -C init/
+	@make main.o -C init/
 
 boot/head.o: boot/head.s FORCE
-	@make -s head.o -C boot/
+	@make head.o -C boot/
 
 kernel.sym: boot/head.o init/main.o \
 		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
@@ -59,38 +59,38 @@ kernel.sym: boot/head.o init/main.o \
 	@nm images/kernel.sym | grep -v '\(compiled\)\|\(\.o$$\)\|\( [aU] \)\|\(\.\.ng$$\)\|\(LASH[RL]DI\)'| sort > images/kernel.map
 
 kernel/math/math.a: FORCE
-	@make -s -C kernel/math
+	@make -C kernel/math
 
 kernel/blk_drv/blk_drv.a: FORCE
-	@make -s -C kernel/blk_drv
+	@make -C kernel/blk_drv
 
 kernel/chr_drv/chr_drv.a: FORCE
-	@make -s -C kernel/chr_drv
+	@make -C kernel/chr_drv
 
 kernel/kernel.o: FORCE
-	@make -s -C kernel
+	@make -C kernel
 
 mm/mm.o: FORCE
-	@make -s -C mm
+	@make -C mm
 
 fs/fs.o: FORCE
-	@make -s -C fs
+	@make -C fs
 
 lib/lib.a: FORCE
-	@make -s -C lib
+	@make -C lib
 
 boot/setup: boot/setup.s FORCE
-	@make -s setup -C boot
+	@make setup -C boot
 
 boot/bootsect: boot/bootsect.s FORCE
-	@make -s bootsect -C boot
+	@make bootsect -C boot
 
 clean:
-	@make -s clean -C rootfs
+	@make clean -C rootfs
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
 	@rm -f images/kernel.sym boot/*.o typescript* info bochsout.txt
-	@make -s clean -C callgraph
-	@for i in init mm fs kernel lib boot; do make -s clean -C $$i; done
+	@make clean -C callgraph
+	@for i in init mm fs kernel lib boot; do make clean -C $$i; done
 
 distclean: clean
 	@rm -f tag* cscope* linux-0.11.*
@@ -98,7 +98,7 @@ distclean: clean
 dep:
 	@sed '/\#\#\# Dependencies/q' < Makefile > tmp_make
 	@cp tmp_make Makefile
-	@for i in init fs kernel mm; do make -s dep -C $$i; done
+	@for i in init fs kernel mm; do make dep -C $$i; done
 
 # Test on emulators with different prebuilt rootfs
 include Makefile.emulators
