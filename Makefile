@@ -1,5 +1,3 @@
-OS = $(shell uname)
-
 #
 # if you want the ram-disk device, define this to be the
 # size in blocks.
@@ -44,9 +42,6 @@ Image: boot/bootsect boot/setup kernel.sym ramfs
 	@rm -f images/kernel
 	@sync
 
-disk: Image
-	@dd bs=8192 if=images/Image of=/dev/fd0
-
 boot/head.o: boot/head.s
 	@make head.o -C boot/
 
@@ -87,29 +82,15 @@ boot/setup: boot/setup.s
 boot/bootsect: boot/bootsect.s
 	@make bootsect -C boot
 
-tmp.s:	boot/bootsect.s images/kernel.sym
-	@(echo -n "SYSSIZE = (";ls -l images/kernel.sym | grep kernel.sym \
-		| cut -c25-31 | tr '\012' ' '; echo "+ 15 ) / 16") > tmp.s
-	@cat boot/bootsect.s >> tmp.s
-
 clean:
 	@make clean -C rootfs
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
 	@rm -f init/*.o images/kernel.sym boot/*.o typescript* info bochsout.txt
 	@make clean -C callgraph
 	@for i in mm fs kernel lib boot; do make clean -C $$i; done
-info:
-	@make clean
-	@script -q -c "make all"
-	@cat typescript | col -bp | grep -E "warning|Error" > info
-	@cat info
 
 distclean: clean
 	@rm -f tag* cscope* linux-0.11.*
-
-backup: clean
-	@(cd .. ; tar cf - linux | compress16 - > backup.Z)
-	@sync
 
 dep:
 	@sed '/\#\#\# Dependencies/q' < Makefile > tmp_make
@@ -197,27 +178,12 @@ debug: Image
 	$(VM_CMD)$(VM_DBG)
 
 debug-fd: Image flp
-	echo $(OS)
 	$(SETROOTDEV_CMD_FDB)
 	$(VM_CMD_FDB)$(VM_DBG)
 
 debug-hd: Image hda
-	echo $(OS)
 	$(SETROOTDEV_CMD_HDA)
 	$(VM_CMD_HDA)$(VM_DBG)
-
-bochs-debug:
-	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc
-
-bochs:
-ifeq ($(BOCHS),)
-	@(cd tools/bochs/bochs-2.3.7; \
-	./configure --enable-plugins --enable-disasm --enable-gdb-stub;\
-	make)
-endif
-
-bochs-clean:
-	@make clean -C tools/bochs/bochs-2.3.7
 
 ifeq ($(f),)
 f = main
@@ -246,7 +212,6 @@ help:
 	@echo "     make debug -- debug the kernel in qemu/bochs & gdb at port 1234"
 	@echo "     make debug-fd -- debug the kernel with fs in floppy"
 	@echo "     make debug-hd -- debug the kernel with fs in hard disk"
-	@echo "     make disk  -- generate a kernel Image & copy it to floppy"
 	@echo "     make cscope -- genereate the cscope index databases"
 	@echo "     make switch -- switch the emulator: qemu and bochs"
 	@echo "     make tags -- generate the tag file"

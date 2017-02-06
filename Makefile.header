@@ -1,3 +1,4 @@
+OS := $(shell uname)
 UNAME := $(shell uname)
 
 # Qemu
@@ -21,7 +22,6 @@ RAM_IMG = rootram.img
 ifeq ($(UNAME), Linux)
 	AS	= as --32
 	LD	= ld
-	#LDFLAGS = -m elf_i386 -x 
 	LDFLAGS = -m elf_i386
 	CC	= gcc
 	CFLAGS  = -g -m32 -fno-builtin -fno-stack-protector -fomit-frame-pointer -fstrength-reduce #-Wall
@@ -35,7 +35,6 @@ endif
 ifeq ($(UNAME), Darwin)
 	AS	= i386-elf-as --32
 	LD	= i386-elf-ld
-	#LDFLAGS = -m elf_i386 -x 
 	LDFLAGS = -m elf_i386
 	CC	= i386-elf-gcc
 	CFLAGS  = -gdwarf-2 -g3 -m32 -fno-builtin -fno-stack-protector -fomit-frame-pointer -fstrength-reduce #-Wall
