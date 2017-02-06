@@ -5,6 +5,7 @@
 
 IMAGE=$1
 root_dev=$2
+ram_img=$3
 
 # by default, using the integrated floppy including boot & root image
 if [ -z "$root_dev" ]; then
@@ -17,3 +18,8 @@ fi
 
 # Set "device" for the root image file
 echo -ne "\x$DEFAULT_MINOR_ROOT\x$DEFAULT_MAJOR_ROOT" | dd ibs=1 obs=1 count=2 seek=508 of=$IMAGE conv=notrunc  2>&1 >/dev/null
+
+# Write Ramdisk RootFS
+if [ -n "$ram_img" -a -f "$ram_img" ]; then
+	dd if=$ram_img seek=256 bs=1024 of=$IMAGE conv=notrunc 2>&1 >/dev/null
+fi

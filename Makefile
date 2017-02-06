@@ -37,7 +37,7 @@ Image: boot/bootsect boot/setup kernel.sym ramfs
 	@cp -f images/kernel.sym images/kernel.tmp
 	@$(STRIP) images/kernel.tmp
 	@$(OBJCOPY) -O binary -R .note -R .comment images/kernel.tmp images/kernel
-	$(BUILD) boot/bootsect boot/setup images/kernel images/Image rootfs/$(RAM_IMG) $(ROOT_DEV)
+	$(BUILD) boot/bootsect boot/setup images/kernel images/Image
 	@rm images/kernel.tmp
 	@rm -f images/kernel
 	@sync
