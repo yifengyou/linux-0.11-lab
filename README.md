@@ -114,7 +114,7 @@ Optional
     * Go to the "Mac OS X Package (.pkg) Installer" part and download the corresponding version
     * Self update MacPorts
 
-                $ xcode-select -switch /Applications/Xcode.app/Contents/Developer
+                $ xcode-select --switch /Applications/Xcode.app/Contents/Developer
                 $ sudo port -v selfupdate
 
 * Install cross compiler gcc and binutils
