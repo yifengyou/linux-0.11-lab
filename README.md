@@ -194,6 +194,7 @@ Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
     * add callgraph generation support
     * add docker support, allow to build the whole lab with one command
     * rewrite the document: README.md
+    * Fix up "Reset-floppy Called"
     * clean up everything
     * repo: <https://github.com/tinyclub/linux-0.11-lab>
 

@@ -365,6 +365,7 @@ static void recalibrate_floppy(void)
 	current_track = 0;
 	do_floppy = recal_interrupt;
 	output_byte(FD_RECALIBRATE);
+	current_drive = CURRENT_DEV;
 	output_byte(head<<2 | current_drive);
 	if (reset)
 		do_fd_request();
