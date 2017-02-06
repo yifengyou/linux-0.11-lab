@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Demo Page
+Comment=Demonstration page
+Exec=/usr/bin/firefox http://showterm.io/c000d06c8f89072554b59
+Icon=/usr/share/pixmaps/firefox.png
+Type=Application
