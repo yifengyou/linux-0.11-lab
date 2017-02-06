@@ -37,6 +37,11 @@ Optional (bochs emulator instead of qemu)
     (gdb) b main
     (gdb) c
 
+                        // to debug the bootsect or setup part, please load the symbol files
+    $ gdb boot/bootsect.sym
+    $ gdb boot/setup.sym
+
+
 Optional
 
     $ echo "add-auto-load-safe-path $PWD/.gdbinit" > ~/.gdbinit  // let gdb auto load the commands in .gdbinit
