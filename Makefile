@@ -2,7 +2,7 @@
 # if you want the ram-disk device, define this to be the
 # size in blocks.
 #
-RAMDISK =  -DRAMDISK=2048
+RAMDISK = # -DRAMDISK=2048
 
 # This is a basic Makefile for setting the general configuration
 include Makefile.header

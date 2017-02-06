@@ -62,7 +62,11 @@ endif
 
 # Running on emulators with differrent rootfs
 
-start: Image
+ramdisk-boot:
+	# Force init/main.o build with ramdisk support
+	make -B init/main.o RAMDISK=-DRAMDISK=2014
+
+start: ramdisk-boot Image
 	$(SETROOTDEV_CMD_RAM)
 	$(VM_CMD)
 
@@ -76,7 +80,7 @@ start-hd: Image hda
 
 # Debugging the above targets
 
-debug: Image
+debug: ramdisk-boot Image
 	$(SETROOTDEV_CMD_RAM)
 	$(VM_CMD)$(VM_DBG)
 
