@@ -23,7 +23,7 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
 - [Hack Rootfs](#hack-rootfs)
     - [RAM image](#ram-image)
     - [Floppy image](#floppy-image)
-    - [Harddisk image](#hd-image)
+    - [Harddisk image](#harddisk-image)
 
 - [Changes](#changes)
 
