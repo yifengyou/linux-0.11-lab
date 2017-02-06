@@ -70,8 +70,8 @@ With Docker:
         $ tools/run-docker-lab.sh
         $ tools/open-docker-lab.sh
 
-* The above command will start a VNC page, login with 'ubuntu' as password
- 
+* The above command will start a VNC page, login with the password printed in the console
+
 ### Hack Linux 0.11 on Linux
 
     $ make help		// get help
