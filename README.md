@@ -3,6 +3,8 @@ Linux 0.11 Lab
 
 The old Linux kernel source version 0.11 and the integrated experiment environment.
 
+![Linux 0.11 Lab Demo](images/linux-0.11-lab-with-docker-vncserver+novnc.jpg)
+
 ## Contents
 
 - [Introduction](#introduction)
