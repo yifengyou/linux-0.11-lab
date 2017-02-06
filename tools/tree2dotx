@@ -27,6 +27,9 @@ fontsize=16
 # Specify the symbols you not concern with space as decollator here
 filterstr="";
 
+# output: dot, flame
+output="dot"
+
 # Usage
 
 function usage
@@ -41,7 +44,7 @@ function usage
         echo ""
 }
 
-while getopts "f:s:S:d:h" opt;
+while getopts "f:s:S:d:h:o:" opt;
 do
         case $opt in
                 f)
@@ -55,6 +58,9 @@ do
                 ;;
                 d)
                         direction=$OPTARG
+                ;;
+                o)
+                        output=$OPTARG
                 ;;
                 h|?)
                         usage $0;
@@ -82,15 +88,20 @@ grep -v ^$ | grep -v "^[0-9]* director" \
                 # Filternode array are used to record the symbols who have been filtered.
                 oldnodedepth = -1; oldnode = ""; nodep[-1] = ""; filter[nodep[-1]] = 0;
                 oldnodedepth_orig = -1; nodepre = 0; nodebase = 0; nodefirst = 0;
+                output = "'$output'";
+
+                #printf("output = %s\n", output);
 
                 # Store the symbols to an array farr
                 split(fstr,farr," ");
 
                 # print some setting info
-                printf("digraph G{\n");
-                printf("\trankdir='$direction';\n");
-                printf("\tsize=\"'$size'\";\n");
-                printf("\tnode [fontsize='$fontsize',fontcolor='$fontcolor',style=filled,fillcolor='$fillcolor',shape='$shape'];\n");
+                if (output == "dot") {
+                    printf("digraph G{\n");
+                    printf("\trankdir='$direction';\n");
+                    printf("\tsize=\"'$size'\";\n");
+                    printf("\tnode [fontsize='$fontsize',fontcolor='$fontcolor',style=filled,fillcolor='$fillcolor',shape='$shape'];\n");
+                }
         }{
                 # Get the node, and its depth(nodedepth)
                 # nodedepth = match($0, "[^| `]");
@@ -133,7 +144,13 @@ grep -v ^$ | grep -v "^[0-9]* director" \
                                 filter[node] = 1;
                         #       printf("node = %s, filter[node] = %d\n", node, filter[node]);
 			} else if (nodep[nodedepth-1] != "") {
-                                printf("\t\"%s\" -> \"%s\";\n", nodep[nodedepth-1], node, nodep[nodedepth-1], node);
+                                if (output == "dot") {
+                                    printf("\t\"%s\" -> \"%s\";\n", nodep[nodedepth-1], node, nodep[nodedepth-1], node);
+                                } else {
+                                    for (i = 0; i < nodedepth; i++)
+                                        printf("%s;", nodep[i]);
+                                    printf("%s 1\n", node);
+                                }
                         #       printf("\t\"%s\" -> \"%s\"[label=\"%s>%s\"];\n", nodep[nodedepth-1], node, nodep[nodedepth-1], node);
                         }
                 }
@@ -143,6 +160,7 @@ grep -v ^$ | grep -v "^[0-9]* director" \
                 oldnodedepth = nodedepth;
                 oldnode = node;
         } END {
-                printf("}");
+                if (output == "dot")
+                    printf("}");
         }'
 
