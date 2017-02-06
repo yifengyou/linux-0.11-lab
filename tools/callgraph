@@ -4,6 +4,12 @@
 #
 # -- Based on cflow and tree2dotx
 #
+# Usage:
+#
+#       $ callgraph func_name dir_name|file_name
+#
+# Output: ../callgraph/func.dir_file_name.svg
+#
 
 # OS
 OS=$(uname)
