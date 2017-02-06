@@ -5,7 +5,11 @@ RUN sed -i -e "s/archive.ubuntu.com/mirrors.163.com/g" /etc/apt/sources.list
 
 RUN apt-get -y update
 
-RUN apt-get install -y vim cscope exuberant-ctags build-essential qemu-system-x86
+RUN apt-get install -y vim cscope exuberant-ctags
+
+RUN apt-get install -y build-essential gcc gdb binutils
+
+RUN apt-get install -y qemu-system-x86
 
 RUN apt-get install -y bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
 
