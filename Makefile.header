@@ -9,6 +9,9 @@ BOCHS = bochs
 # VM configuration
 VM_CFG = tools/vm.cfg
 
+# Tool for Image building
+BUILD = tools/build.sh
+
 # Tool for specify root device
 SETROOTDEV = tools/setrootdev.sh
 
