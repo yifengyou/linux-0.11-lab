@@ -213,9 +213,15 @@ endif
 ifeq ($(d),)
 d = ./
 endif
-
+ifeq ($(b),)
+    ifeq ($(OS), Darwin)
+    b = /Applications/Safari.app/Contents/MacOS/Safari
+    else
+    b = chromium-browser
+    endif
+endif
 cg:
-	@tools/callgraph -f $(f) -d $(d)
+	@tools/callgraph -f $(f) -d $(d) -b $(b)
 
 help:
 	@echo "<<<<This is the basic help info of linux-0.11>>>"
@@ -232,7 +238,7 @@ help:
 	@echo "     make cscope -- genereate the cscope index databases"
 	@echo "     make tags -- generate the tag file"
 	@echo "     make cg -- generate callgraph of the default main entry"
-	@echo "     make cg f=func d=dir|file -- generate callgraph of func in file/directory"
+	@echo "     make cg f=func d=dir|file b=browser -- generate callgraph of func in file/directory"
 	@echo "     make clean -- clean the object files"
 	@echo "     make distclean -- only keep the source code files"
 	@echo ""
