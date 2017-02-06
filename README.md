@@ -17,6 +17,13 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux, M
 
     $ apt-get install vim cscope exuberant-ctags build-essential qemu
 
+Optional (bochs emulator instead of qemu)
+
+    $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
+
+    $ echo bochs > vm.cfg       // switch to use bochs
+    $ echo qemu > vm.cfg        // switch back to use qemu
+
 ### hack linux-0.11
 
     $ make help		// get help
