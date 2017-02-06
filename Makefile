@@ -1,9 +1,5 @@
 OS = $(shell uname)
 
-# indicate the path of the bochs
-#BOCHS=$(shell find tools/ -name "bochs" -perm 755 -type f)
-BOCHS=bochs
-
 #
 # if you want the ram-disk device, define this to be the
 # size in blocks.
@@ -101,7 +97,7 @@ clean:
 	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
 	@rm -f init/*.o images/kernel.sym boot/*.o typescript* info bochsout.txt
 	@rm -f calltree/*.dot calltree/*.jpg
-	@for i in mm fs kernel lib boot; do make clean -C $$i; done 
+	@for i in mm fs kernel lib boot; do make clean -C $$i; done
 info:
 	@make clean
 	@script -q -c "make all"
@@ -137,35 +133,49 @@ flp:
 ramfs:
 	@make ramfs -C rootfs
 
+# VM (Qemu/Bochs) Setting for different rootfs
+
+ROOT_RAM = 0000
+ROOT_FDB = 021d
+ROOT_HDA = 0301
+
+SETROOTDEV_CMD = $(SETROOTDEV) images/Image
+SETROOTDEV_CMD_RAM = $(SETROOTDEV_CMD) $(ROOT_RAM)
+SETROOTDEV_CMD_FDB = $(SETROOTDEV_CMD) $(ROOT_FDB)
+SETROOTDEV_CMD_HDA = $(SETROOTDEV_CMD) $(ROOT_HDA)
+
+QEMU_CMD = $(QEMU) -m 16M -boot a -fda images/Image
+QEMU_CMD_FDB = $(QEMU_CMD) -fdb rootfs/$(FLP_IMG)
+QEMU_CMD_HDA = $(QEMU_CMD) -hda rootfs/$(HDA_IMG)
+
 start: Image
-	@$(SETROOTDEV) images/Image 0000
-	$(QEMU) -m 16M -boot a -fda images/Image
+	$(SETROOTDEV_CMD_RAM)
+	$(QEMU_CMD)
 
 start-fd: Image flp
-	@$(SETROOTDEV) images/Image 021d
-	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG)
+	$(SETROOTDEV_CMD_FDB)
+	$(QEMU_CMD_FDB)
 
 start-hd: Image hda
-	@$(SETROOTDEV) images/Image 0301
-	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG)
+	$(SETROOTDEV_CMD_HDA)
+	$(QEMU_CMD_HDA)
 
 debug: Image
-	@echo $(OS)
-	@$(SETROOTDEV) images/Image 0000
-	$(QEMU) -m 16M -boot a -fda images/Image -s -S #-nographic #-serial '/dev/ttyS0'
+	$(SETROOTDEV_CMD_RAM)
+	$(QEMU_CMD) -s -S #-nographic #-serial '/dev/ttyS0'
 
 debug-fd: Image flp
-	@echo $(OS)
-	@$(SETROOTDEV) images/Image 021d
-	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG) -s -S #-nographic #-serial '/dev/ttyS0'
+	echo $(OS)
+	$(SETROOTDEV_CMD_FDB)
+	$(QEMU_CMD_FDB) -s -S #-nographic #-serial '/dev/ttyS0'
 
 debug-hd: Image hda
-	@echo $(OS)
-	@$(SETROOTDEV) images/Image 0301
-	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG) -s -S #-nographic #-serial '/dev/ttyS0'
+	echo $(OS)
+	$(SETROOTDEV_CMD_HDA)
+	$(QEMU_CMD_HDA) -s -S #-nographic #-serial '/dev/ttyS0'
 
 bochs-debug:
-	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc	
+	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc
 
 bochs:
 ifeq ($(BOCHS),)
