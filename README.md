@@ -12,10 +12,31 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux, M
 
 ### Linux Setup
 
-* A linux distribution: debian, ubuntu and mint are recommended
+* The Linux distributions: debian and ubuntu are recommended
 * Some tools: gcc gdb qemu cscope ctags cflow graphviz
 
-    $ apt-get install vim cscope exuberant-ctags build-essential qemu
+        $ apt-get install vim cscope exuberant-ctags build-essential qemu
+
+* Use with docker (everything is installed by default for you)
+    * Install docker
+
+                $ sudo apt-get install software-properties-common
+                $ sudo apt-get install python-software-properties
+                $ sudo add-apt-repository ppa:dotcloud/lxc-docker
+                $ sudo apt-get -y update
+                $ sudo apt-get install lxc-docker
+
+    * Start the service
+
+                $ docker build -t tinylab/linux-0.11-lab ./
+                $ CONTAINER_ID=$(docker run -d -p 6080:6080 dorowu/ubuntu-desktop-lxde-vnc)
+                $ docker logs $CONTAINER_ID | sed -n 1p
+                User: ubuntu Pass: ubuntu
+
+    * Access it via `http://localhost:6080/vnc.html` Or `http://172.17.0.1:6080/vnc.html`
+
+                $ docker exec 8222763de ifconfig eth0 | grep "inet addr:"
+                inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
 
 Optional (bochs emulator instead of qemu)
 
@@ -53,29 +74,29 @@ Optional
 * Install xcode from "App Store"
 * Install Mac package manage tool: MacPorts from http://www.macports.org/install.php
 
-  * Check your OS X version from "About This Mac", for example, Lion
-  * Go to the "Mac OS X Package (.pkg) Installer" part and download the corresponding version
-  * Self update MacPorts
+    * Check your OS X version from "About This Mac", for example, Lion
+    * Go to the "Mac OS X Package (.pkg) Installer" part and download the corresponding version
+    * Self update MacPorts
 
-    $ xcode-select -switch /Applications/Xcode.app/Contents/Developer
-    $ sudo port -v selfupdate
+                $ xcode-select -switch /Applications/Xcode.app/Contents/Developer
+                $ sudo port -v selfupdate
 
 * Install cross compiler gcc and binutils
 
-    $ sudo port install qemu
+        $ sudo port install qemu
 
 * Install qemu
 
-    $ sudo port install i386-elf-binutils i386-elf-gcc
+        $ sudo port install i386-elf-binutils i386-elf-gcc
 
 * Install graphviz and cflow
 
-    $ sudo port install GraphViz
-    $ sudo port install cflow
+        $ sudo port install GraphViz
+        $ sudo port install cflow
 
 * Install gdb. 'Cause port doesn't provide i386-elf-gdb, use the pre-compiled tools/mac/gdb.xz or download its source and compile it.
 
-    $ cd tools/mac/ ; tar Jxf gdb.xz
+        $ cd tools/mac/ ; tar Jxf gdb.xz
 
 Optional
 
@@ -84,11 +105,11 @@ Optional
 
     $ wget ftp://ftp.gnu.org/gnu/gdb/gdb-7.4.tar.bz2
     $ tar -xzvf gdb-7.4.tar.bz2
-	$ cd gdb-7.4
-	$ ./configure --target=i386-elf
-	$ make
+    $ cd gdb-7.4
+    $ ./configure --target=i386-elf
+    $ make
 
 
 ### hack linux-0.11
 
-	same as section 1.2
+Same as section 1.2
