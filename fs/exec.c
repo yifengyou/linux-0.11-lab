@@ -319,8 +319,10 @@ restart_interp:
 	if (current->executable)
 		iput(current->executable);
 	current->executable = inode;
-	for (i=0 ; i<32 ; i++)
-		current->sigaction[i].sa_handler = NULL;
+	for (i=0 ; i<32 ; i++) {
+		if (current->sigaction[i].sa_handler != SIG_IGN)
+			current->sigaction[i].sa_handler = NULL;
+	}
 	for (i=0 ; i<NR_OPEN ; i++)
 		if ((current->close_on_exec>>i)&1)
 			sys_close(i);

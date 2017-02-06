@@ -114,7 +114,7 @@ void schedule(void)
 					(*p)->signal |= (1<<(SIGALRM-1));
 					(*p)->alarm = 0;
 				}
-			if (((*p)->signal & ~(_BLOCKABLE & (*p)->blocked)) &&
+			if (((*p)->signal & (_BLOCKABLE & ~(*p)->blocked)) &&
 			(*p)->state==TASK_INTERRUPTIBLE)
 				(*p)->state=TASK_RUNNING;
 		}
@@ -160,8 +160,9 @@ void sleep_on(struct task_struct **p)
 	*p = current;
 	current->state = TASK_UNINTERRUPTIBLE;
 	schedule();
+	*p = tmp;
 	if (tmp)
-		tmp->state=0;
+		tmp->state=TASK_RUNNING;
 }
 
 void interruptible_sleep_on(struct task_struct **p)
@@ -177,19 +178,19 @@ void interruptible_sleep_on(struct task_struct **p)
 repeat:	current->state = TASK_INTERRUPTIBLE;
 	schedule();
 	if (*p && *p != current) {
-		(**p).state=0;
+		(*p)->state = TASK_RUNNING;
 		goto repeat;
 	}
-	*p=NULL;
+	*p = tmp;
 	if (tmp)
-		tmp->state=0;
+		tmp->state = TASK_RUNNING;
 }
 
 void wake_up(struct task_struct **p)
 {
 	if (p && *p) {
-		(**p).state=0;
-		*p=NULL;
+		(*p)->state = TASK_RUNNING;
+		*p = NULL;
 	}
 }
 

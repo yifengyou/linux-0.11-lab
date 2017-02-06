@@ -301,7 +301,7 @@ void do_hd_request(void)
 	INIT_REQUEST;
 	dev = MINOR(CURRENT->dev);
 	block = CURRENT->sector;
-	if (dev >= 5*NR_HD || block+2 > hd[dev].nr_sects) {
+	if (dev >= 5*NR_HD || (block+2) > (hd[dev].start_sect + hd[dev].nr_sects - 1)) {
 		end_request(0);
 		goto repeat;
 	}
