@@ -63,7 +63,7 @@ endif
 # Running on emulators with differrent rootfs
 
 ramdisk-boot:
-	# Force init/main.o build with ramdisk support
+	@# Force init/main.o build with ramdisk support
 	make -B init/main.o RAMDISK=2048
 
 start: ramdisk-boot Image

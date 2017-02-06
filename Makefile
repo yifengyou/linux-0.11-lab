@@ -42,10 +42,10 @@ Image: boot/bootsect boot/setup kernel.sym ramfs
 	@rm -f images/kernel
 	@sync
 
-init/main.o:
+init/main.o: FORCE
 	@make main.o -C init/
 
-boot/head.o: boot/head.s
+boot/head.o: boot/head.s FORCE
 	@make head.o -C boot/
 
 kernel.sym: boot/head.o init/main.o \
@@ -58,31 +58,31 @@ kernel.sym: boot/head.o init/main.o \
 	-o images/kernel.sym
 	@nm images/kernel.sym | grep -v '\(compiled\)\|\(\.o$$\)\|\( [aU] \)\|\(\.\.ng$$\)\|\(LASH[RL]DI\)'| sort > images/kernel.map
 
-kernel/math/math.a:
+kernel/math/math.a: FORCE
 	@make -C kernel/math
 
-kernel/blk_drv/blk_drv.a:
+kernel/blk_drv/blk_drv.a: FORCE
 	@make -C kernel/blk_drv
 
-kernel/chr_drv/chr_drv.a:
+kernel/chr_drv/chr_drv.a: FORCE
 	@make -C kernel/chr_drv
 
-kernel/kernel.o:
+kernel/kernel.o: FORCE
 	@make -C kernel
 
-mm/mm.o:
+mm/mm.o: FORCE
 	@make -C mm
 
-fs/fs.o:
+fs/fs.o: FORCE
 	@make -C fs
 
-lib/lib.a:
+lib/lib.a: FORCE
 	@make -C lib
 
-boot/setup: boot/setup.s
+boot/setup: boot/setup.s FORCE
 	@make setup -C boot
 
-boot/bootsect: boot/bootsect.s
+boot/bootsect: boot/bootsect.s FORCE
 	@make bootsect -C boot
 
 clean:
@@ -108,6 +108,8 @@ include Makefile.tags
 
 # For Call graph generation
 include Makefile.callgraph
+
+FORCE: ;
 
 help:
 	@echo "------------------Linux 0.11 Lab (http://tinylab.org/linux-0.11-lab)------------------"
