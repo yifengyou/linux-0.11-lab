@@ -185,21 +185,8 @@ debug-hd: Image hda
 	$(SETROOTDEV_CMD_HDA)
 	$(VM_CMD_HDA)$(VM_DBG)
 
-ifeq ($(f),)
-f = main
-endif
-ifeq ($(d),)
-d = ./
-endif
-ifeq ($(b),)
-    ifeq ($(OS), Darwin)
-    b = /Applications/Safari.app/Contents/MacOS/Safari
-    else
-    b = chromium-browser
-    endif
-endif
-cg:
-	@tools/callgraph -f $(f) -d $(d) -b $(b)
+# For Call graph generation
+include Makefile.callgraph
 
 help:
 	@echo ":::::::::::::::::::::::: Linux 0.11 Lab (http://tinylab.org) ::::::::::::::::::::::::"
