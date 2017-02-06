@@ -3,6 +3,10 @@ Linux-0.11
 
 The old Linux kernel source ver 0.11 which has been tested under modern Linux,  Mac OSX and Windows.
 
+* 2011-07-31, tigercn <moonlight.yang@gmail.com>
+* 2008-10-15, 2015-03-15, falcon <wuzhangjin@gmail.com>
+* 2012-04-30, yuanxinyu <yuanxinyu.hangzhou@gmail.com>
+
 ## Build on Linux
 
 ### Linux Setup
@@ -14,14 +18,17 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux,  
 
     $ make help		// get help
     $ make  		// compile
-    $ make start		// boot it on qemu
-    $ make debug		// debug it via qemu & gdb, you'd start gdb to connect it.
+    $ make start-hd		// boot it on qemu with hard disk image
+    $ make debug-hd		// debug it via qemu & gdb, you'd start gdb to connect it.
 
     $ gdb images/kernel.sym
     (gdb) target remote :1234
     (gdb) b main
     (gdb) c
 
+optional
+
+    $ echo "add-auto-load-safe-path $PWD/.gdbinit" > ~/.gdbinit  // let gdb auto load the commands in .gdbinit
 
 ## Build on Mac OS X
 
@@ -30,7 +37,6 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux,  
 * install cross compiler gcc and binutils
 * install qemu
 * install gdb. you need download the gdb source and compile it to use gdb because port doesn't provide i386-elf-gdb, or you can use the pre-compiled gdb in the tools directory.
-* a linux-0.11 hardware image file: hdc-0.11.img
 
     $ sudo port install qemu
     $ sudo port install i386-elf-binutils i386-elf-gcc
