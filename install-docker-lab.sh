@@ -11,3 +11,7 @@ apt-get -y install docker-engine
 usermod -aG docker $USER
 
 docker build -t tinylab/linux-0.11-lab ./
+
+echo "Note: To let docker work without sudo, please restart the X session."
+
+# pkill X

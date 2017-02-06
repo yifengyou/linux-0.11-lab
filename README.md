@@ -59,6 +59,7 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
                 $ sudo apt-get -y update
                 $ sudo apt-get -y install docker-engine
                 $ sudo usermod -aG docker $USER
+                $ pkill X
 
     * Build and Start the service
 
