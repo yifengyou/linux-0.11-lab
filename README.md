@@ -9,15 +9,15 @@ The old Linux kernel source version 0.11 and the integrated experiment environme
 
 - [Build on Linux](#build-on-linux)
     - [Linux Setup](#linux-setup)
-    - [Hack Linux 0.11](#hack-linux-0.11-on-linux)
+    - [Hack Linux 0.11 on Linux](#hack-linux-011-on-linux)
 
 - [Build on Mac OS X](#build-on-mac-os-x)
     - [Mac OS X Setup](#mac-os-x-setup)
-    - [Hack Linux 0.11](#hack-linux-0.11-on-mac)
+    - [Hack Linux 0.11 on Mac](#hack-linux-011-on-mac)
 
-- [Build on Other Systems (Include Mac OS X and Windows)](#build-on-other-systems)
-    - [Setup with Docker Toolbox and Dockerfile](#other-systems-setup)
-    - [Hack Linux 0.11](#hack-linux-0.11-on-other-systems)
+- [Build on Other Systems (Include Mac OS X, Windows)](#build-on-other-systems-include-mac-os-x-windows)
+    - [Setup with Docker Toolbox and Dockerfile](#setup-with-docker-toolbox-and-dockerfile)
+    - [Hack Linux 0.11 on other systems](#hack-linux-011-on-other-systems)
 
 
 - [Hack Rootfs](#hack-rootfs)
@@ -93,7 +93,7 @@ Optional (bochs emulator instead of qemu)
     $ make switch       // switch to another emulator, between qemu and bochs
     Switch to use emulator: bochs
 
-### Hack Linux 0.11
+### Hack Linux 0.11 on Linux
 
     $ make help		// get help
     $ make  		// compile
@@ -158,9 +158,9 @@ Optional
     $ ./configure --target=i386-elf
     $ make
 
-### Hack Linux 0.11
+### Hack Linux 0.11 on Mac
 
-Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
+Same as [Hack Linux-0.11 on Linux](#hack-linux-011-on-linux)
 
 ## Build on Other Systems (include Mac OS X, Windows)
 
@@ -189,9 +189,9 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
         $ docker exec $CONTAINER_ID ifconfig eth0 | grep "inet addr:"
         inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
 
-### Hack Linux 0.11
+### Hack Linux 0.11 on other systems
 
-Same as [Hack Linux-0.11 on Linux](#hack-linux-0.11-on-linux)
+Same as [Hack Linux-0.11 on Linux](#hack-linux-011-on-linux)
 
 ## Hack Rootfs
 
