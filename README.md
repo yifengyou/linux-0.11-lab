@@ -3,9 +3,10 @@ Linux-0.11
 
 The old Linux kernel source ver 0.11 which has been tested under modern Linux, Mac OSX.
 
+* 2008-10-15, falcon <wuzhangjin@gmail.com>
 * 2011-07-31, tigercn <moonlight.yang@gmail.com>
-* 2008-10-15, 2015-03-15, falcon <wuzhangjin@gmail.com>
 * 2012-04-30, yuanxinyu <yuanxinyu.hangzhou@gmail.com>
+* 2015-03-15, falcon <wuzhangjin@gmail.com>
 
 ## Build on Linux
 
