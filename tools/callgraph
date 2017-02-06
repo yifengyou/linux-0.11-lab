@@ -6,7 +6,14 @@
 #
 # Usage:
 #
-#       $ callgraph func_name dir_name|file_name
+#       $ callgraph
+#
+#               -f func_name
+#               -d directory|file
+#               -F filterstr
+#               -D depth
+#               -o directory
+#
 #
 # Output: ../callgraph/func.dir_file_name.svg
 #
@@ -23,19 +30,70 @@ fi
 tree2dotx=${TOP_DIR}/tree2dotx
 
 # Output directory
-OUT_DIR=callgraph
+OUT_DIR=${TOP_DIR}/../callgraph
+[ ! -d $OUT_DIR ] && OUT_DIR=./
 PIC_TYPE=svg
+
+# Get browser
 if [ "x$OS" == "xDarwin" ]; then
     BROWSER=/Applications/Safari.app/Contents/MacOS/Safari
 else
     BROWSER=chromium-browser
 fi
 
+# Default setting
+
 # Input: Function Name [Directory Name]
-func=$1
-[ -z "$func" ] && echo "Usage: $0 func_name [dir_name], use main by default." && func=main
+func=main
 dir=./
-[ -n "$2" ] && [ -f "$2" -o -d "$2" ] && dir=$2
+
+# Default depth of the tree
+depth=
+
+# filterstr for tree2dotx
+filterstr=""
+
+# Usage
+
+function usage
+{
+        echo ""
+        echo "  $0 "
+        echo ""
+        echo "   -f func_name"
+        echo "   -d directory|file"
+        echo "   -F filterstr"
+        echo "   -D depth"
+        echo "   -o directory"
+        echo ""
+}
+
+while getopts "F:f:d:D:o:h" opt;
+do
+        case $opt in
+                F)
+                        filterstr=$OPTARG
+                ;;
+                f)
+                        func=$OPTARG
+                ;;
+                d)
+                        [ -n "$OPTARG" ] && [ -f "$OPTARG" -o -d "$OPTARG" ] && dir=$OPTARG
+                ;;
+                D)
+                        depth=$OPTARG
+                ;;
+                o)
+                        output=$OPTARG
+                        [ ! -d "$output" ] && mkdir -p $output
+                        OUT_DIR=$output
+                ;;
+                h|?)
+                        usage $0;
+                        exit 1;
+                ;;
+        esac
+done
 
 # Check the function and find out its file
 if [ -d "$dir" ]; then
@@ -76,21 +134,28 @@ func=`echo "$match" | sed -n -e "${file_in},${file_in}p" | sed -n -e "s/.* \([a-
 # Convert it to .dot format with tree2dotx
 # Convert it to jpg format with dot of Graphviz
 tmp=`echo $file | tr '/' '_' | tr '.' '_'`
-pic=${OUT_DIR}/${func}.${tmp}.${PIC_TYPE}
+pic=${func}.${tmp}.${PIC_TYPE}
+long_pic=${OUT_DIR}/${pic}
+
 which cflow 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
         echo "Note: cflow doesn't exist, please install it..."
         sleep 2
         echo "Note: Use calltree instead for this test."
         sleep 2
-        calltree="${TOP_DIR}/calltree -b -np list="
+        [ -n "$depth" ] && depth="depth=$depth"
+        calltree="${TOP_DIR}/calltree -b -np $depth list="
 else
-        calltree="cflow -b -m "
+        [ -n "$depth" ] && depth=" -d $depth "
+        calltree="cflow -b $depth -m "
 fi
-${calltree}${func} ${file} | ${tree2dotx} 2>/dev/null | dot -T${PIC_TYPE} -o ${TOP_DIR}/../$pic
+echo "${calltree}${func} ${file} | ${tree2dotx} "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic"
+${calltree}${func} ${file} | ${tree2dotx} -f "${filterstr}" 2>/dev/null | dot -T${PIC_TYPE} -o $long_pic
 
 # Tell users
-echo "Target: ${file}: ${func} -> ${pic}"
+echo "Target: ${file}: ${func} -> ${long_pic}"
 
 # Display it
-$BROWSER ${pic} &
+which cflow 2>&1 > /dev/null
+[ $? -ne 0 ] && exit 0
+$BROWSER ${long_pic} &
