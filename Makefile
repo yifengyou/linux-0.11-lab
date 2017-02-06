@@ -8,7 +8,7 @@ BOCHS=bochs
 # if you want the ram-disk device, define this to be the
 # size in blocks.
 #
-RAMDISK =  #-DRAMDISK=512
+RAMDISK =  -DRAMDISK=2048
 
 # This is a basic Makefile for setting the general configuration
 include Makefile.header
@@ -20,9 +20,10 @@ CPP	+= -Iinclude
 #
 # ROOT_DEV specifies the default root-device when making the image.
 # This can be either FLOPPY, /dev/xxxx or empty, in which case the
-# default of /dev/hd6 is used by 'build'.
+# default of hd1(0301) is used by 'build'.
 #
-ROOT_DEV= #FLOPPY 
+#ROOT_DEV= 021d	# FLOPPY B
+#ROOT_DEV= 0301	# hd1
 
 ARCHIVES=kernel/kernel.o mm/mm.o fs/fs.o
 DRIVERS =kernel/blk_drv/blk_drv.a kernel/chr_drv/chr_drv.a
@@ -36,32 +37,32 @@ LIBS	=lib/lib.a
 .c.o:
 	@$(CC) $(CFLAGS) -c -o $*.o $<
 
-all:	Image	
+all:	Image
 
-Image: boot/bootsect boot/setup tools/system
-	@cp -f tools/system system.tmp
-	@$(STRIP) system.tmp
-	@$(OBJCOPY) -O binary -R .note -R .comment system.tmp tools/kernel
-	@tools/build.sh boot/bootsect boot/setup tools/kernel Image $(ROOT_DEV)
-	@rm system.tmp
-	@rm -f tools/kernel
+Image: boot/bootsect boot/setup kernel.sym ramfs
+	@cp -f images/kernel.sym images/kernel.tmp
+	@$(STRIP) images/kernel.tmp
+	@$(OBJCOPY) -O binary -R .note -R .comment images/kernel.tmp images/kernel
+	@tools/build.sh boot/bootsect boot/setup images/kernel images/Image $(RAM_IMG) $(ROOT_DEV)
+	@rm images/kernel.tmp
+	@rm -f images/kernel
 	@sync
 
 disk: Image
-	@dd bs=8192 if=Image of=/dev/fd0
+	@dd bs=8192 if=images/Image of=/dev/fd0
 
 boot/head.o: boot/head.s
 	@make head.o -C boot/
 
-tools/system:	boot/head.o init/main.o \
+kernel.sym: boot/head.o init/main.o \
 		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
 	@$(LD) $(LDFLAGS) boot/head.o init/main.o \
 	$(ARCHIVES) \
 	$(DRIVERS) \
 	$(MATH) \
 	$(LIBS) \
-	-o tools/system 
-	@nm tools/system | grep -v '\(compiled\)\|\(\.o$$\)\|\( [aU] \)\|\(\.\.ng$$\)\|\(LASH[RL]DI\)'| sort > System.map 
+	-o images/kernel.sym
+	@nm images/kernel.sym | grep -v '\(compiled\)\|\(\.o$$\)\|\( [aU] \)\|\(\.\.ng$$\)\|\(LASH[RL]DI\)'| sort > images/kernel.map
 
 kernel/math/math.a:
 	@make -C kernel/math
@@ -90,15 +91,15 @@ boot/setup: boot/setup.s
 boot/bootsect: boot/bootsect.s
 	@make bootsect -C boot
 
-tmp.s:	boot/bootsect.s tools/system
-	@(echo -n "SYSSIZE = (";ls -l tools/system | grep system \
+tmp.s:	boot/bootsect.s images/kernel.sym
+	@(echo -n "SYSSIZE = (";ls -l images/kernel.sym | grep kernel.sym \
 		| cut -c25-31 | tr '\012' ' '; echo "+ 15 ) / 16") > tmp.s
 	@cat boot/bootsect.s >> tmp.s
 
 clean:
 	@make clean -C rootfs
-	@rm -f Image System.map tmp_make core boot/bootsect boot/setup
-	@rm -f init/*.o tools/system boot/*.o typescript* info bochsout.txt
+	@rm -f images/Image images/kernel.map tmp_make core boot/bootsect boot/setup
+	@rm -f init/*.o images/kernel.sym boot/*.o typescript* info bochsout.txt
 	@rm -f *.dot *.jpg
 	@for i in mm fs kernel lib boot; do make clean -C $$i; done 
 info:
@@ -130,12 +131,38 @@ cscope:
 hda:
 	@make hda -C rootfs
 
-start: hda
-	@qemu-system-x86_64 -m 16M -boot a -fda Image -hda rootfs/$(HDA_IMG)
+flp:
+	@make flp -C rootfs
+
+ramfs:
+	@make ramfs -C rootfs
+
+start:
+	@$(SETROOTDEV) images/Image 0000
+	$(QEMU) -m 16M -boot a -fda images/Image
+
+start-fd: flp
+	@$(SETROOTDEV) images/Image 021d
+	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG)
+
+start-hd: hda
+	@$(SETROOTDEV) images/Image 0301
+	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG)
 
 debug:
 	@echo $(OS)
-	@qemu-system-x86_64 -m 16M -boot a -fda Image -hda rootfs/$(HDA_IMG) -s -S
+	@$(SETROOTDEV) images/Image 0000
+	$(QEMU) -m 16M -boot a -fda images/Image -s -S -nographic -serial '/dev/ttyS0'
+
+debug-fd: flp
+	@echo $(OS)
+	@$(SETROOTDEV) images/Image 021d
+	$(QEMU) -m 16M -boot a -fda images/Image -fdb rootfs/$(FLP_IMG) -s -S -nographic -serial '/dev/ttyS0'
+
+debug-hd: hda
+	@echo $(OS)
+	@$(SETROOTDEV) images/Image 0301
+	$(QEMU) -m 16M -boot a -fda images/Image -hda rootfs/$(HDA_IMG) -s -S -nographic -serial '/dev/ttyS0'
 
 bochs-debug:
 	@$(BOCHS) -q -f tools/bochs/bochsrc/bochsrc-hd-dbg.bxrc	
@@ -161,7 +188,11 @@ help:
 	@echo "Usage:"
 	@echo "     make --generate a kernel floppy Image with a fs on hda1"
 	@echo "     make start -- start the kernel in qemu"
+	@echo "     make start-fd -- start the kernel with fs in floppy"
+	@echo "     make start-hd -- start the kernel with fs in hard disk"
 	@echo "     make debug -- debug the kernel in qemu & gdb at port 1234"
+	@echo "     make debug-fd -- debug the kernel with fs in floppy"
+	@echo "     make debug-hd -- debug the kernel with fs in hard disk"
 	@echo "     make disk  -- generate a kernel Image & copy it to floppy"
 	@echo "     make cscope -- genereate the cscope index databases"
 	@echo "     make tags -- generate the tag file"

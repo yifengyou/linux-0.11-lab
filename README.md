@@ -17,7 +17,7 @@ The old Linux kernel source ver 0.11 which has been tested under modern Linux,  
     $ make start		// boot it on qemu
     $ make debug		// debug it via qemu & gdb, you'd start gdb to connect it.
 
-    $ gdb tools/system
+    $ gdb system
     (gdb) target remote :1234
     (gdb) b main
     (gdb) c

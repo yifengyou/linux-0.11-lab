@@ -27,7 +27,7 @@ $ make bochs-debug
 and then start the gdb to connect the 1234 port
 
 $ cd linux-0.11
-$ gdb -q tools/system
+$ gdb -q images/kernel.sym
 (gdb) break main
 (gdb) target remote :1234
 (gdb) s
