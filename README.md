@@ -67,7 +67,6 @@ If want to learn the latest [Linux Kernel](http://www.kernel.org), please try ou
         or
         $ tools/docker/pull         # Pull from docker hub
 
-        $ tools/docker/uid
         $ tools/docker/identify
         $ tools/docker/run
 
