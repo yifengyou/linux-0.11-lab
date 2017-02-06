@@ -21,8 +21,8 @@ Optional (bochs emulator instead of qemu)
 
     $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
 
-    $ echo bochs > vm.cfg       // switch to use bochs
-    $ echo qemu > vm.cfg        // switch back to use qemu
+    $ echo bochs > tools/vm.cfg       // switch to use bochs
+    $ echo qemu > tools/vm.cfg        // switch back to use qemu
 
 ### hack linux-0.11
 
