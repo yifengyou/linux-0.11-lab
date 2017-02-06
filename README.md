@@ -71,15 +71,7 @@ With Docker:
         $ tools/open-docker-lab.sh
 
 * The above command will start a VNC page, login with 'ubuntu' as password
-
-Optional (bochs emulator instead of qemu)
-
-    $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
-    $ sudo apt-get install graphviz cflow
-
-    $ make switch       // switch to another emulator, between qemu and bochs
-    Switch to use emulator: bochs
-
+ 
 ### Hack Linux 0.11 on Linux
 
     $ make help		// get help
@@ -87,6 +79,10 @@ Optional (bochs emulator instead of qemu)
     $ make start-hd	// boot it on qemu with hard disk image
     $ make debug-hd	// debug it via qemu & gdb, you'd start gdb to connect it.
     $ make start-hd G=0 // Use curses based terminal instead of graphics, friendly for ssh login
+
+    $ make switch       // switch to another emulator, between qemu and bochs
+    Switch to use emulator: bochs
+
 
     $ gdb images/kernel.sym
     (gdb) target remote :1234
