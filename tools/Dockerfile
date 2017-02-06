@@ -26,6 +26,9 @@ RUN chmod 440 /etc/sudoers.d/ubuntu
 # Add shortcuts on Desktop
 ADD linux-lab.desktop /
 
+# Add lab-name
+ADD lab-name /
+
 # Tune the screen size
 ADD supervisord.conf /etc/supervisor/conf.d/
 
