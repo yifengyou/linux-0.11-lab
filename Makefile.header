@@ -1,5 +1,4 @@
 OS := $(shell uname)
-UNAME := $(shell uname)
 
 # Qemu
 QEMU = qemu-system-i386
@@ -19,7 +18,7 @@ HDA_IMG = hdc-0.11.img
 FLP_IMG = rootimage-0.11
 RAM_IMG = rootram.img
 
-ifeq ($(UNAME), Linux)
+ifeq ($(OS), Linux)
 	AS	= as --32
 	LD	= ld
 	LDFLAGS = -m elf_i386
@@ -32,7 +31,7 @@ ifeq ($(UNAME), Linux)
 	OBJCOPY = objcopy
 endif
 
-ifeq ($(UNAME), Darwin)
+ifeq ($(OS), Darwin)
 	AS	= i386-elf-as --32
 	LD	= i386-elf-ld
 	LDFLAGS = -m elf_i386
