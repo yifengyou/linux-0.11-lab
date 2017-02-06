@@ -24,7 +24,7 @@ ADD sudoers.d/ubuntu /etc/sudoers.d/
 RUN chmod 440 /etc/sudoers.d/ubuntu
 
 # Add shortcuts on Desktop
-ADD linux-lab.desktop /
+ADD lab.desktop /
 
 # Add lab-name
 ADD lab-name /
