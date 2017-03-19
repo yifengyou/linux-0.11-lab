@@ -7,7 +7,7 @@ The old Linux kernel source version [0.11](http://oldlinux.org) and the integrat
 
 [CS630 Qemu Lab](https://github.com/tinyclub/cs630-qemu-lab) is a related project, it is a friendly learning environment for the X86 assembly course: [CS630](http://www.cs.usfca.edu/%7Ecruse/cs630f06/).
 
-If want to learn the latest [Linux Kernel](http://www.kernel.org), please try our [Linux Lab](https://github.com/tinyclub/linux-lab)
+If you want to learn the latest [Linux Kernel](http://www.kernel.org), please try our [Linux Lab](https://github.com/tinyclub/linux-lab)
 
 [![Linux 0.11 Lab Demo](images/linux-0.11-lab-with-docker-vncserver+novnc.jpg)](https://showdesk.github.io/50bc346f53a19b4d1f813b428b0b7b49/)
 
@@ -159,7 +159,7 @@ If want to use this Lab on the other systems, such as Windows (and even Mac OS
 X), with the Dockerfile support, everything is simplified.
 
 Only need to install the docker toolbox, which is a lightweight Linux
-distribution made specifially to run Docker containers, with this tool and our
+distribution made specifically to run Docker containers, with this tool and our
 Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 
 ### Setup with Docker Toolbox and Dockerfile
