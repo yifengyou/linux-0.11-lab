@@ -67,7 +67,6 @@ If you want to learn the latest [Linux Kernel](http://www.kernel.org), please tr
         or
         $ tools/docker/pull         # Pull from docker hub
 
-        $ tools/docker/identify
         $ tools/docker/run
 
 * The above command will start a VNC page, login with the password printed in the console
