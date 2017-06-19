@@ -9,7 +9,7 @@ The old Linux kernel source version [0.11](http://oldlinux.org) and the integrat
 
 If you want to learn the latest [Linux Kernel](http://www.kernel.org), please try our [Linux Lab](https://github.com/tinyclub/linux-lab)
 
-[![Linux 0.11 Lab Demo](images/linux-0.11-lab-with-docker-vncserver+novnc.jpg)](https://showdesk.github.io/2017-03-18-17-54-23-linux-0.11-lab-usage-00-06-42/)
+[![Linux 0.11 Lab Demo](images/linux-0.11-lab-with-docker-vncserver+novnc.jpg)](http://showdesk.io/2017-03-18-17-54-23-linux-0.11-lab-usage-00-06-42/)
 
 ## Contents
 
