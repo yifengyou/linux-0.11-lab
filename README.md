@@ -58,7 +58,7 @@ If you want to learn the latest [Linux Kernel](http://www.kernel.org), please tr
 * The Linux distributions: debian and ubuntu (>= 14.04) are recommended
 * Install basic tools
 
-        $ apt-get install vim cscope exuberant-ctags build-essential qemu
+        $ sudo apt-get install vim cscope exuberant-ctags build-essential qemu
 
 * Optional
 
