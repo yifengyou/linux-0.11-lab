@@ -56,18 +56,16 @@ If you want to learn the latest [Linux Kernel](http://www.kernel.org), please tr
 ### Linux Setup
 
 * The Linux distributions: debian and ubuntu (>= 14.04) are recommended
-* Install the lab
+* Install basic tools
 
-        $ git clone https://github.com/tinyclub/cloud-lab.git
-        $ cd cloud-lab/ && tools/docker/choose linux-0.11-lab
+        $ apt-get install vim cscope exuberant-ctags build-essential qemu
 
-        $ tools/docker/build        # Build ourselves
-        or
-        $ tools/docker/pull         # Pull from docker hub
+* Optional
 
-        $ tools/docker/run
+    $ sudo apt-get install bochs vgabios bochsbios bochs-doc bochs-x libltdl7 bochs-sdl bochs-term
+    $ sudo apt-get install graphviz cflow
 
-* The above command will start a VNC page, login with the password printed in the console
+**Note**: The [docker install method](#build-on-other-systems-include-mac-os-x-windows) is recommended in lastest Ubuntu distibutions.
 
 ### Hack Linux 0.11 on Linux
 
@@ -167,11 +165,14 @@ Dockerfile, we can simply build a Linux 0.11 Lab on every system.
 
 - Build and Start the service
 
-        $ tools/install-docker-lab.sh
-        $ tools/run-docker-lab.sh
-        $ tools/open-docker-lab.sh
+        $ git clone https://github.com/tinyclub/cloud-lab.git
+        $ cd cloud-lab/ && tools/docker/choose linux-0.11-lab
 
-- The above command with start a VNC page, login with 'ubuntu' password
+        $ tools/docker/pull         # Pull from docker hub
+
+        $ tools/docker/run
+
+- The above command will start a VNC page, login with the password printed in the console
 
 ### Hack Linux 0.11 on other systems
 
