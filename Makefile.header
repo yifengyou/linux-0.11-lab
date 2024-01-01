@@ -33,7 +33,7 @@ CG = $(TOOL_DIR)/callgraph
 ifeq ($(OS), Linux)
 	AS	= as -g --32
 	LD	= ld
-	LDFLAGS = -m elf_i386
+	LDFLAGS = -m elf_i386 -z noexecstack
 	CC	= gcc
 	CFLAGS  = -g -m32 -march=i386 -fno-builtin -fno-stack-protector -fomit-frame-pointer -fstrength-reduce #-Wall
 
